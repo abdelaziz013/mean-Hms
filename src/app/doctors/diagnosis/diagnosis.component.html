@@ -1,0 +1,96 @@
+
+<nav mat-tab-nav-bar>
+    <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+      <i class="fas fa-procedures"></i>
+      In-Patients List</a
+    >
+    <a mat-stroked-button mat-tab-link routerLink="/reception/out-patient">
+      <i class="fas fa-walking"></i>
+      Out-Patients List</a
+    >
+  </nav>
+
+  <div fxLayout fxLayoutAlign="center">
+    <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+      <h1  *ngIf="!patientDiagnosis" fxLayout fxLayoutAlign="center center">Add Patient Diagnosis</h1>
+      <h1 *ngIf="patientDiagnosis" fxLayout fxLayoutAlign="center center" style = "color:red">Edit Patient Diagnosis</h1>
+      <form
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        (submit)="onSaveDiagnosis(diagnosisForm)"
+        #diagnosisForm="ngForm"
+      >
+        <mat-form-field appearance="outline">
+          <mat-label>Symptoms</mat-label>
+          <textarea
+            matInput
+            type="text"
+            name="symptoms"
+            [ngModel]="patientDiagnosis?.symptoms"
+            placeholder="Symptoms"
+            #symptoms="ngModel"
+            required
+            rows=1
+          >
+        </textarea>
+          <mat-error *ngIf="symptoms.invalid&&symptoms.touched">Please enter Patient Symptoms</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Signs</mat-label>
+            <textarea
+              matInput
+              type="text"
+              name="signs"
+              [ngModel]="patientDiagnosis?.signs"
+              placeholder="Signs"
+              #signs="ngModel"
+              required
+              rows=1
+            >
+          </textarea>
+            <mat-error *ngIf="signs.invalid&&signs.touched">Please enter Patient Symptoms</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Past History</mat-label>
+            <textarea
+              matInput
+              type="text"
+              name="pHistory"
+              [ngModel]="patientDiagnosis?.pastHistory"
+              placeholder="Past History"
+              #pHistory="ngModel"
+              required
+              rows=2
+            >
+          </textarea>
+            <mat-error *ngIf="pHistory.invalid&&pHistory.touched">Please enter PatientPast History  </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Diagnosis</mat-label>
+            <textarea
+              matInput
+              type="text"
+              name="diagnosis"
+              [ngModel]="patientDiagnosis?.diagnosis"
+              placeholder="Diagnosis"
+              #diagnosis="ngModel"
+              required
+              rows=4
+            >
+          </textarea>
+            <mat-error *ngIf="diagnosis.invalid&&diagnosis.touched">Please enter Patient Diagnosis</mat-error>
+        </mat-form-field>
+
+
+
+
+        <button *ngIf="!patientDiagnosis" type="submit" mat-raised-button color="primary">Save</button>
+        <button *ngIf="patientDiagnosis" type="submit" mat-button color="primary">Edit</button>
+
+      </form>
+    </mat-card>
+
+  </div>

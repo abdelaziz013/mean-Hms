@@ -1,0 +1,82 @@
+nav {
+  background-color: #f5f5f5
+}
+
+.mat-stroked-button {
+  border: none;
+}
+
+a {
+
+  font-size: 15px;
+}
+
+a:hover {
+  color: black;
+}
+
+
+i {
+  color: black;
+  font-size: 15px;
+  margin-bottom: 3px;
+}
+
+h2 {
+  margin: 30px auto 0px auto;
+}
+
+.mat-elevation-z8 {
+  width: 85%;
+  margin: -21px auto 30px auto;
+  height: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-raised-button {
+  margin: 10px;
+}
+
+.mat-header-cell,
+.mat-cell {
+  text-align: center
+}
+
+.fa-plus-circle {
+  color: blue;
+}
+
+.diagnosis {
+  background:grey
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.doctor {
+  margin: 5px;
+}
+
+.action-icon{
+  color:white;
+}
+
+.fa-pencil-alt{
+  color:greenyellow;
+}
+.mat-form-field {
+  width: 85%;
+}
+
+.action{
+  padding-top: 20px;
+}
+
+
+.bill-action{
+  color:green;
+}

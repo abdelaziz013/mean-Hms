@@ -1,0 +1,41 @@
+
+nav{
+  background-color: #f5f5f5
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+.signup-form {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+h1 {
+  padding: 20px;
+}
+
+button {
+  font-size: 20px;
+  width: 180px;
+}
+
+.mat-stroked-button{
+  border:none;
+}
+a{
+
+  font-size: 15px;
+}
+a:hover{
+  color:black;
+}
+
+
+i{
+  color:black;
+  font-size: 15px;
+  margin-bottom: 3px;
+
+}

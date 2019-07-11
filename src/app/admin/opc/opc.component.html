@@ -1,0 +1,61 @@
+<div fxLayout="row" fxLayout.lt-md="column" >
+<nav mat-tab-nav-bar fxFlex='40%' >
+  <a mat-stroked-button mat-tab-link routerLink="/admin/opc-list">
+    <i class="fas fa-stream"></i>
+    OPCs List</a
+  >
+
+  <a mat-stroked-button mat-tab-link routerLink="/admin/add-opcshift">
+    <i class="fas fa-plus"></i>
+    Add Opc Shift
+  </a>
+
+  <a mat-stroked-button mat-tab-link routerLink="/admin/opcshift-list">
+    <i class="fas fa-stream"></i>
+    OPCs shiftList
+  </a>
+</nav>
+<nav mat-tab-nav-bar fxFlex='60%'>
+  <a mat-stroked-button mat-tab-link routerLink="/admin/assign-opcshift">
+    <i class="far fa-hand-point-right"></i>
+    Assign OPC Shift
+  </a>
+  <a mat-stroked-button mat-tab-link routerLink="/admin/opcroster-list">
+    <i class="fas fa-stream"></i>
+      OPC Roster
+  </a>
+
+
+</nav>
+</div>
+
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+    <h1 fxLayout fxLayoutAlign="center center">OPC Information</h1>
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="onSaveOpc(opcForm)"
+      #opcForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="name"
+          [ngModel]="opc?.name"
+          placeholder="OPC Name"
+          #name="ngModel"
+          required
+        />
+        <mat-error *ngIf="name.invalid && name.touched"
+          >Please enter OPC Name</mat-error
+        >
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary">Save</button>
+    </form>
+  </mat-card>
+</div>

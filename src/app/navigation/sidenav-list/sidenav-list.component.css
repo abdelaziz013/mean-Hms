@@ -1,0 +1,65 @@
+
+.logo{
+  height: 100px;
+
+}
+
+.logo img {
+  height: 30px;
+  width: 55px;
+  padding-top: 16px;
+}
+
+.logo p {
+  font-family: "Lobster";
+  color: white;
+  display: inline-block;
+  font-size: 34px;
+  color: #36b0e3;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.logo span {
+  color: red;
+}
+
+
+
+a{
+  text-decoration: none;
+  color:black;
+}
+
+a:hover,
+a:active{
+  color:darkgray;
+}
+
+.list-content {
+  font-size: 16px;
+  list-style: none;
+  padding: 10px;
+}
+
+
+
+i{
+  font-size: 18px;
+  padding-right: 15px;
+}
+
+.fa-chevron-right ,.fa-calendar-alt{
+  font-size: 12px;
+  margin-top: -10px;
+  margin-right: -8px;
+}
+
+
+.mat-list-item{
+  background-color: white;
+}
+
+.active-link{
+  color:red !important;;
+}

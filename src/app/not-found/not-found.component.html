@@ -1,0 +1,27 @@
+<div fxLayout fxLayoutAlign="center">
+  <h1>Page Not Found</h1>
+</div>
+
+<div fxLayout fxLayoutAlign="center" *ngIf="!userIsAuthenticated">
+  <a
+    mat-raised-button
+    color="primary"
+    routerLink=""
+    routerLinkActive="router-link-active"
+  >
+    <i class="fas fa-sign-in-alt"></i>
+    go to login page</a
+  >
+</div>
+
+<div fxLayout fxLayoutAlign="center" *ngIf="userIsAuthenticated">
+  <a
+    mat-button
+    color="primary"
+    routerLink="/admin"
+    routerLinkActive="router-link-active"
+  >
+    <i class="fas fa-home"></i>
+    go to Home page</a
+  >
+</div>

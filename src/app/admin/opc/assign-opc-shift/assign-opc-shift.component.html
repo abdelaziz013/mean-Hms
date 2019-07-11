@@ -1,0 +1,106 @@
+<div fxLayout="row" fxLayout.lt-md="column" >
+    <nav mat-tab-nav-bar fxFlex='40%' >
+        <a mat-stroked-button mat-tab-link routerLink="/admin/opc">
+          <i class="fas fa-plus"></i>
+          Add OPC</a
+        >
+
+      <a mat-stroked-button mat-tab-link routerLink="/admin/opc-list">
+        <i class="fas fa-stream"></i>
+        OPCs List</a
+      >
+      <a mat-stroked-button mat-tab-link routerLink="/admin/add-opcshift">
+        <i class="fas fa-plus"></i>
+        Add Opc Shift
+      </a>
+
+
+    </nav>
+    <nav mat-tab-nav-bar fxFlex='60%'>
+        <a mat-stroked-button mat-tab-link routerLink="/admin/opcshift-list">
+          <i class="fas fa-stream"></i>
+          OPCs shiftList
+        </a>
+      <a mat-stroked-button mat-tab-link routerLink="/admin/opcroster-list">
+        <i class="fas fa-stream"></i>
+          OPC Roster
+      </a>
+
+
+    </nav>
+    </div>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+    <h1  *ngIf="mode==='add'"     fxLayout fxLayoutAlign="center center">Assign OPCs Shift</h1>
+    <h1  *ngIf="mode==='edit'"   class="edit"  fxLayout fxLayoutAlign="center center" >Edit OPCs Shift</h1>
+
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="onSave(opcShift)"
+      #opcShift="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <input
+          [ngModel]="roster?.date"
+          #shiftdate="ngModel"
+          name="shiftdate"
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Choose a date"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker> </mat-datepicker>
+        <mat-error *ngIf="shiftdate.invalid && shiftdate.touched"
+          >please choose choose shift date</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Choose Shift</mat-label>
+        <mat-select [ngModel]="roster?.shift" name="shiftName" #shiftName="ngModel" required>
+          <mat-option *ngFor="let shift of shiftList" [value]="shift._id">{{
+            shift.shiftName
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="shiftName.invalid && shiftName.touched"
+          >please choose choose shift Name</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Choose OPC</mat-label>
+        <mat-select [ngModel]="roster?.opc" name="opc" #opc="ngModel" required>
+          <mat-option *ngFor="let opc of opcList" [value]="opc._id">{{
+            opc.name
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="opc.invalid && opc.touched"
+          >please choose OPC Name</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Choose Doctor </mat-label>
+        <mat-select
+            [ngModel]="roster?.doctor"
+            name="doctor"
+            #doctor="ngModel"
+            required>
+          <mat-option *ngFor="let doctor of doctorList" [value]="doctor.id">{{
+            doctor.name}}<span>---</span>{{doctor.speciality }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="doctor.invalid && doctor.touched"
+          >please choose Doctor Name</mat-error
+        >
+      </mat-form-field>
+
+      <button  *ngIf="mode==='add'" type="submit" mat-raised-button color="primary">Save</button>
+      <button *ngIf="mode==='edit'" type="submit" mat-button color="primary">Edit</button>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,27 @@
+
+.login-form{
+  margin-top: 30px;
+  padding:60px 20px;
+  height: 450px;
+
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+.login{
+  background-image: url("../../assets/image/Gallery0021roepixel.jpg");
+  background-size: cover;
+  height: 513px;
+}
+
+mat-card{
+ background-color:whitesmoke;
+ border: 0.5px solid black;
+}
+
+button{
+  width: 50%;
+  margin-top: 40px;
+}

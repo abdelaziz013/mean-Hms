@@ -1,0 +1,69 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/admin/room-list">
+    <i class="fas fa-stream"></i>
+    Room List</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+    <h1 *ngIf="mode==='add'" fxLayout fxLayoutAlign="center center">Room Information</h1>
+    <h1 *ngIf="mode==='edit'" fxLayoutAlign="center center" class="edit">Edit {{room?.roomNumber}} Information</h1>
+
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="25px"
+      (submit)="onSaveRoom(roomForm)"
+      #roomForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Room Type</mat-label>
+        <mat-select [ngModel]="room?.roomType" name="type" #type="ngModel" required>
+          <mat-option *ngFor="let type of roomType" [value]="type">{{
+            type
+          }}</mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="type.invalid && type.touched"
+          >please choose Room Type</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Room Number</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Room Number"
+          [ngModel]="room?.roomNumber"
+          name="number"
+          #number="ngModel"
+          required
+        />
+        <mat-error *ngIf="number.invalid && number.touched"
+          >please enter Room Number</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Room Cost</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Room Cost"
+          [ngModel]="room?.roomCost"
+          #cost="ngModel"
+          name="cost"
+          required
+        />
+        <mat-error *ngIf="cost.invalid && cost.touched"
+          >please enter Room Cost</mat-error
+        >
+      </mat-form-field>
+
+      <button *ngIf="mode==='add'" type="submit" mat-raised-button color="primary">Save</button>
+      <button *ngIf="mode==='edit'" type="submit" mat-button color="primary">Edit</button>
+    </form>
+  </mat-card>
+</div>

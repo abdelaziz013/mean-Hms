@@ -1,0 +1,76 @@
+
+<div fxLayout fxLayout.lt-sm="column" *ngIf="userIsAuthenticated" >
+  <mat-toolbar fxLayout *ngIf="userIsAuthenticated">
+    <div *ngIf="userIsAuthenticated">
+      <button mat-icon-button (click)="onToggleSdenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+    <!-- logo+spacer -->
+
+
+
+    <div
+      *ngIf="userIsAuthenticated"
+      class="logo"
+      fxLayout
+      fxLayoutAlign="center"
+      fxFlex.lt-sm="20%"
+    >
+      <img src="../../../assets/image/logo2.jpg" />
+      <p>H <span> M </span> S</p>
+    </div>
+
+    <div
+      *ngIf="userIsAuthenticated"
+      class="spacer"
+      fxFlex="50%"
+      fxFlex.lt-sm="60%"
+    ></div>
+    <div *ngIf="userIsAuthenticated" fxFlex="20%" fxHide fxShow.lt-sm="true">
+      <button (click)="onLogOut()" mat-stroked-button>
+        <i class="fas fa-sign-out-alt">Logout</i>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <!-- userrole and log out -->
+
+  <mat-toolbar fxLayout="row">
+    <div
+      *ngIf="userIsAuthenticated"
+      class="user"
+      fxLayout="row"
+      fxFlex="80%"
+      fxFlex.lt-sm="100%"
+    >
+      <div fxLayout="row" fxLayoutAlign="center">
+        <div class="user-spacer" fxHide fxShow.lt-sm="true" ></div>
+        <i class="fas fa-user-alt"> </i>
+        <p style="color:#36b0e3">{{ userRole }}</p>
+        <p class="name">{{ name }}</p>
+      </div>
+    </div>
+
+    <div *ngIf="userIsAuthenticated" fxFlex="20%" fxHide.lt-sm="true">
+      <button (click)="onLogOut()" mat-stroked-button>
+        <i class="fas fa-sign-out-alt">Logout</i>
+      </button>
+    </div>
+  </mat-toolbar>
+</div>
+
+<mat-toolbar *ngIf="!userIsAuthenticated" >
+    <div
+    *ngIf="!userIsAuthenticated"
+    style="margin:auto"
+    class="logo"
+    fxLayout
+    fxLayoutAlign="center"
+  >
+    <img style="height: 35px" src="../../../assets/image/logo2.jpg" />
+    <p style="font-size: 40px">H <span> M </span> S</p>
+  </div>
+
+</mat-toolbar>

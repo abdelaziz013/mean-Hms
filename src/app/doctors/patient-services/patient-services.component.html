@@ -1,0 +1,70 @@
+<nav
+*ngIf="userRole === 'Doctor'"
+mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+    <i class="fas fa-procedures"></i>
+    In-Patients List</a
+  >
+
+  <a mat-stroked-button mat-tab-link routerLink="/reception/out-patient">
+    <i class="fas fa-walking"></i>
+    Out-Patients List</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="600px" fxFlex.lt-sm="350px">
+    <h1 fxLayout fxLayoutAlign="center center">Add Service</h1>
+
+    <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+      <div formArrayName="service">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          fxLayout.lt-md="column"
+          fxLayoutGap="20px"
+          *ngFor="let item of service.controls; let serviceIndex = index"
+          [formGroupName]="serviceIndex"
+        >
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Service</mat-label>
+            <!-- <input matInput required formControlName="medicine" /> -->
+            <mat-select matInput required formControlName="pService">
+              <mat-option
+                *ngFor="let serviceName of serviceList"
+                [value]="serviceName._id"
+              >
+                {{ serviceName.serviceName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout fxLayoutAlign="center center">
+          <button
+            type="button"
+            class="mat mat-a"
+            mat-raised-button
+            color="primary"
+            (click)="addService()"
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            class="mat"
+            mat-raised-button
+            color="accent"
+            (click)="removeService(index)"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div fxLayout fxLayoutAlign="center center">
+        <button type="submit" mat-raised-button color="primary">Save</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

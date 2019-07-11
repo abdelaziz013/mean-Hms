@@ -1,0 +1,84 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/admin/medicine">
+    <i class="fas fa-plus"></i>
+    Add Medicine</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <h2>Medicine List</h2>
+</div>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-form-field class="filter">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+      <mat-icon>search</mat-icon>
+    </button>
+    <input
+      matInput
+      class="search-input"
+      (keyup)="applyFilter($event.target.value)"
+      placeholder="Search"
+    />
+  </mat-form-field>
+</div>
+
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef>Index</mat-header-cell>
+      <mat-cell *matCellDef="let medicine; let i = index">{{ i + 1 }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>name</mat-header-cell>
+      <mat-cell *matCellDef="let medicine">{{ medicine.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <mat-header-cell *matHeaderCellDef>Cost</mat-header-cell>
+      <mat-cell *matCellDef="let medicine">{{ medicine.cost }} L.E</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell
+      fxLayout
+      fxLayoutAlign="center"
+      class="action"
+       *matHeaderCellDef>actions</mat-header-cell>
+      <mat-cell
+      fxLayout fxLayoutAlign="center"
+      fxLayout.lt-md="column"
+      *matCellDef="let medicine">
+        <a
+          fXFlex
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/admin/medicine/edit', medicine._id]"
+          >Edit
+        </a>
+        <button
+          fXFlex
+          mat-raised-button
+          color="accent"
+          (click)="onDelete(medicine._id,medicine.name)"
+        >
+          Delete
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [length]="medicineListLength"
+    [pageSize]="itemPerPage"
+    [pageSizeOptions]="pageSizeOption"
+    (page)="onChangPage($event)"
+  >
+  </mat-paginator>
+</div>
+
+

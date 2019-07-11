@@ -1,0 +1,116 @@
+<div fxLayout="row" fxLayout.lt-md="column">
+  <nav mat-tab-nav-bar fxFlex="40%">
+    <a mat-stroked-button mat-tab-link routerLink="/admin/opc">
+      <i class="fas fa-plus"></i>
+      Add OPC</a
+    >
+
+    <a mat-stroked-button mat-tab-link routerLink="/admin/opc-list">
+      <i class="fas fa-stream"></i>
+      OPCs List</a
+    >
+
+    <a mat-stroked-button mat-tab-link routerLink="/admin/add-opcshift">
+      <i class="fas fa-plus"></i>
+      Add Opc Shift
+    </a>
+  </nav>
+  <nav mat-tab-nav-bar fxFlex="60%">
+    <a mat-stroked-button mat-tab-link routerLink="/admin/opcshift-list">
+      <i class="fas fa-stream"></i>
+      OPCs shiftList
+    </a>
+
+    <a mat-stroked-button mat-tab-link routerLink="/admin/assign-opcshift">
+      <i class="far fa-hand-point-right"></i>
+      Assign OPC Shift
+    </a>
+  </nav>
+</div>
+
+<div fxLayout fxLayoutAlign="center">
+  <h2>OPCs Roster</h2>
+</div>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-form-field class="filter">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+      <mat-icon>search</mat-icon>
+    </button>
+    <input
+      matInput
+      class="search-input"
+      (keyup)="applyFilter($event.target.value)"
+      placeholder="Search By shift date"
+    />
+  </mat-form-field>
+</div>
+
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef> Index </mat-header-cell>
+      <mat-cell *matCellDef="let roster; let i = index">{{ i + 1 }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="shiftDate">
+      <mat-header-cell *matHeaderCellDef> Shift Date </mat-header-cell>
+      <mat-cell *matCellDef="let roster"> {{ roster?.date }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="shiftName">
+      <mat-header-cell *matHeaderCellDef> Shift Name </mat-header-cell>
+      <mat-cell *matCellDef="let roster"
+        >{{ roster?.shift?.shiftName }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="opcName">
+      <mat-header-cell *matHeaderCellDef> OPC Name </mat-header-cell>
+      <mat-cell *matCellDef="let roster">
+        {{ roster?.opc?.name }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="doctorName">
+      <mat-header-cell *matHeaderCellDef> Doctor Name </mat-header-cell>
+      <mat-cell *matCellDef="let roster"> {{ roster?.doctor?.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actionsColumn">
+      <mat-header-cell *matHeaderCellDef> actions </mat-header-cell>
+      <mat-cell
+        fxLayout
+        fxLayoutAlign="center"
+        fxLayout.lt-md="column"
+        *matCellDef="let roster"
+      >
+        <a
+          fxFlex
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/admin/opc-roster/edit/', roster._id]"
+          >Edit
+        </a>
+        <button
+          fxFlex
+          mat-raised-button
+          color="accent"
+          (click)="ondelete(roster._id)"
+        >
+          Delete
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+  <mat-paginator
+    [length]="rosterLength"
+    [pageSize]="itemPerPage"
+    [pageSizeOptions]="pageSizeOption"
+    (page)="onChangPage($event)"
+  >
+  </mat-paginator>
+</div>

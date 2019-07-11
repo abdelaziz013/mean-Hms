@@ -1,0 +1,90 @@
+/* = */
+@font-face {
+  font-family: "Lobster";
+  src: url("../../../assets/fonts/Lobster-Regular.ttf") format("truetype");
+}
+
+
+
+a {
+  cursor: pointer;
+}
+
+mat-toolbar {
+  background-color: #121621;
+ 
+}
+
+.mat-icon-button {
+  color: white;
+
+}
+
+mat-icon {
+  font-size: 30px;
+}
+
+i {
+  color: white;
+}
+
+.logo {
+  height: 60px;
+  margin-left: 15px;
+
+}
+
+.logo img {
+  height: 30px;
+  width: 55px;
+  padding-top: 16px;
+}
+
+.logo p {
+  font-family: "Lobster";
+  color: white;
+  display: inline-block;
+  font-size: 34px;
+  color: #36b0e3;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.logo span {
+  color: red;
+}
+
+.user {
+  color: white;
+  padding: 30px;
+  margin: 6px;
+}
+
+.user p{
+  display: inline;
+  /* color: #36b0e3; */
+  font-size: 15px;
+
+}
+/* .user span{
+  color:green;
+  padding: 5px;
+} */
+.fa-user-alt{
+  color:#36b0e3;
+  padding: 10px;
+  font-size: 15px;
+  margin-top: 12px;
+
+}
+ .name{
+
+  text-align:center;
+  color: greenyellow;
+  margin-left:10px;
+}
+
+.user-spacer{
+width: 110px;
+
+}

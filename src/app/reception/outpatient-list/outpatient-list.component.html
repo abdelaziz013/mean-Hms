@@ -1,0 +1,193 @@
+<nav mat-tab-nav-bar>
+  <a
+    *ngIf="userRole === 'Reception'"
+    mat-stroked-button
+    mat-tab-link
+    routerLink="/reception/patient"
+    routerLinkActive="router-link-active"
+  >
+    <i class="fas fa-plus"></i>
+    Add Patient</a
+  >
+
+  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+    <i class="fas fa-procedures"></i>
+    In-Patients List</a
+  >
+  <a
+  *ngIf="userRole === 'Reception'"
+    mat-stroked-button
+    mat-tab-link
+    routerLink="/reception/bill-list">
+    <i class="fas fa-file-invoice-dollar"></i>
+    Bill List</a
+  >
+
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <h2 style = "color:red">Out-patient List</h2>
+</div>
+<div fxLayout fxLayoutAlign="center">
+  <mat-form-field class="filter">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+      <mat-icon>search</mat-icon>
+    </button>
+    <input
+      matInput
+      class="search-input"
+      (keyup)="applyFilter($event.target.value)"
+      placeholder="Search By Patient Name"
+    />
+  </mat-form-field>
+</div>
+
+
+<div class="mat-elevation-z8">
+  <mat-table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef>Index</mat-header-cell>
+      <mat-cell *matCellDef="let doctor; let i = index">{{ i + 1 }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let patient">{{ patient?.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="gender">
+      <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>
+      <mat-cell *matCellDef="let patient">{{ patient?.gender }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="opc">
+      <mat-header-cell *matHeaderCellDef>OPC</mat-header-cell>
+      <mat-cell *matCellDef="let patient">{{
+        patient?.opc?.name
+      }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="doctor">
+      <mat-header-cell *matHeaderCellDef>Caring Doctor</mat-header-cell>
+      <mat-cell *matCellDef="let patient">{{
+        patient?.caringDoctor?.name
+      }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell
+          fxLayout
+          fxLayoutAlign="center"
+          class="action"
+          *matHeaderCellDef
+          >Actions</mat-header-cell
+        >
+        <mat-cell
+          fxLayout="row"
+          fxLayoutAlign="center"
+          fxLayout.lt-md="column"
+          fxLayoutGap.lt-md="0px"
+          *matCellDef="let patient"
+        >
+          <a
+            fxFlex
+            *ngIf="userRole === 'Reception'"
+            mat-button
+            color="green"
+            class="bill-action"
+            [routerLink]="['/reception/add-bill', patient._id]"
+            matTooltip="Add Bill"
+          >
+            <mat-icon>library_add</mat-icon>
+          </a>
+
+          <a
+            fxFlex
+            *ngIf="userRole === 'Reception'"
+            mat-button
+            color="primary"
+            matTooltip="Edit"
+            [routerLink]="['/reception/edit-patient/', patient?._id]"
+          >
+            <mat-icon>edit</mat-icon>
+          </a>
+          <a
+            fxFlex
+            *ngIf="userRole === 'Reception'"
+            mat-button
+            class="rec-action"
+            color="accent"
+            matTooltip="Delete"
+            (click)="onDeleteOutpatient(patient?._id,patient?.name)"
+          >
+            <mat-icon>delete</mat-icon>
+          </a>
+
+          <div>
+            <div>
+              <a
+                *ngIf="userRole === 'Doctor'"
+                [routerLink]="['/doctor/diagnosis', patient?._id]"
+                class="doctor"
+                mat-mini-fab
+                color="primary"
+                matTooltip="Add Diagnosis"
+                matTooltipClass="diagnosis"
+              >
+                <i class="fas fa-plus action-icon "></i>
+              </a>
+
+              <a
+                *ngIf="userRole === 'Doctor'"
+                class="doctor"
+                mat-mini-fab
+                matTooltipClass="diagnosis"
+                [routerLink]="['/doctor/prescription', patient?._id]"
+              >
+                <i class="fas fa-prescription action-icon "></i>
+              </a>
+            </div>
+
+            <div>
+              <a
+                class="doctor"
+                mat-mini-fab
+                color="accent"
+                *ngIf="userRole === 'Doctor'"
+                matTooltip="Add Services"
+                matTooltipClass="diagnosis"
+                [routerLink]="['/doctor/services', patient?._id]"
+              >
+                <i class="fas fa-file-medical-alt action-icon "></i>
+              </a>
+
+              <a
+                *ngIf="userRole === 'Doctor'"
+                mat-mini-fab
+                color="primary"
+                class="doctor"
+                matTooltip="Case Manager"
+                aria-label="Button that displays a tooltip when focused or hovered over"
+                matTooltipClass="diagnosis"
+                [routerLink]="['/doctor/show-case', patient?._id]"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </a>
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    *ngIf="outpatientList.length > 0"
+    [length]="outpatientListLength"
+    [pageSize]="itemPerPage"
+    [pageSizeOptions]="pageSizeOption"
+    (page)="onChangPage($event)"
+  >
+  </mat-paginator>
+</div>

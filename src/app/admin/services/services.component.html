@@ -1,0 +1,85 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/admin/service-list">
+    <i class="fas fa-stream"></i>
+    Service List</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+    <h1 *ngIf="mode === 'add'" fxLayout fxLayoutAlign="center center">
+      Service Information
+    </h1>
+    <h1 *ngIf="mode === 'edit'" fxLayoutAlign="center center" class="edit">
+      Edit {{ service?.serviceName }} Information
+    </h1>
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="25px"
+      (submit)="onSaveService(serviceForm)"
+      #serviceForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Service Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="name"
+          [ngModel]="service?.serviceName"
+          placeholder="Service Name"
+          #name="ngModel"
+          required
+        />
+        <mat-error *ngIf="name.invalid && name.touched"
+          >please enter Service Name</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Service Category</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Service Category"
+          [ngModel]="service?.serviceCategory"
+          name="category"
+          #category="ngModel"
+          required
+        />
+        <mat-error *ngIf="category.invalid && category.touched"
+          >please enter Service Category</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Service Cost</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Service Cost"
+          [ngModel]="service?.serviceCost"
+          #cost="ngModel"
+          name="cost"
+          required
+        />
+        <mat-error *ngIf="cost.invalid && cost.touched"
+          >please enter Service Cost</mat-error
+        >
+      </mat-form-field>
+
+      <button
+        *ngIf="mode === 'add'"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        Save
+      </button>
+
+      <button *ngIf="mode === 'edit'" type="submit" mat-button color="primary">
+        Edit
+      </button>
+    </form>
+  </mat-card>
+</div>

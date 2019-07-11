@@ -1,0 +1,79 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+    <i class="fas fa-procedures"></i>
+    In-Patients List</a
+  >
+  <a mat-stroked-button mat-tab-link routerLink="/reception/out-patient">
+    <i class="fas fa-walking"></i>
+    Out-Patients List</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="900px" fxFlex.lt-sm="350px">
+    <h1 fxLayout fxLayoutAlign="center center">Add Prescription</h1>
+
+    <form [formGroup]="prscibtionForm" (ngSubmit)="onSubmit()">
+      <div formArrayName="prescribtion">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          fxLayout.lt-md="column"
+          fxLayoutGap="20px"
+          *ngFor="
+            let item of prescription.controls;
+            let prescriptionIndex = index
+          "
+          [formGroupName]="prescriptionIndex"
+        >
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Mebicine</mat-label>
+            <!-- <input matInput required formControlName="medicine" /> -->
+            <mat-select matInput required formControlName="medicine">
+              <mat-option
+                *ngFor="let medicine of medicineList"
+                [value]="medicine._id"
+              >
+                {{ medicine.name }}
+              </mat-option>
+            </mat-select>
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Dose</mat-label>
+            <input matInput required formControlName="dose" />
+            
+
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout fxLayoutAlign="center center">
+          <button
+            type="button"
+            class="mat mat-a"
+            mat-raised-button
+            color="primary"
+            (click)="addPresceiption()"
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            class="mat"
+            mat-raised-button
+            color="accent"
+            (click)="removePresceiption(prescriptionIndex)"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div fxLayout fxLayoutAlign="center center">
+        <button type="submit" mat-raised-button color="primary">Save</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

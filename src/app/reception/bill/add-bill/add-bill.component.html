@@ -1,0 +1,249 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+    <i class="fas fa-procedures"></i>
+    In-Patients List</a
+  >
+  <a mat-stroked-button mat-tab-link routerLink="/reception/out-patient">
+    <i class="fas fa-walking"></i>
+    Out-Patients List</a
+  >
+</nav>
+
+<!-- discharge date -->
+
+<div fxLayout fxLayoutAlign="center" *ngIf="addbill">
+  <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+    <h1 fxLayout fxLayoutAlign="center center" [ngStyle]="{ color: 'red' }">
+      Add Discharge Date
+    </h1>
+
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="onSave(dischrageDate)"
+      #dischrageDate="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <input
+          ngModel
+          #dischargeDate="ngModel"
+          name="dischargeDate"
+          matInput
+          [matDatepicker]="picker"
+          [min]="minDate"
+          placeholder="Enter Discharge Date"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="dischargeDate.invalid && dischargeDate.touched"
+          >Please enter Patient Discharge Date
+        </mat-error>
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary">Save</button>
+    </form>
+  </mat-card>
+</div>
+
+<!-- room cost--------------------------------------- -->
+
+<h3
+  fxLayout
+  fxLayoutAlign="center"
+  style="margin-top:200px"
+  *ngIf="patientBill"
+>
+  Bill was issued you can print it
+</h3>
+<div *ngIf="patientBill" fxLayout fxLayoutAlign="center">
+  <button
+    mat-raised-button
+    color="accent"
+    routerLink="/reception/print-bill/{{billId}}"
+  >
+
+
+    <mat-icon>print</mat-icon>
+    Print Bill
+  </button>
+</div>
+
+<div *ngIf="!patientBill">
+  <div fxLayout fxLayoutAlign="center" *ngIf="!addbill">
+    <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+      <div *ngIf="!outpatient">
+        <h3 fxLayout fxLayoutAlign="center center">
+          Room Cost
+        </h3>
+
+        <!-- room detalis -->
+
+        <div fxLayout fxLayoutGap="30px">
+          <h4>
+            Room Number :
+          </h4>
+          <h5>{{ patient?.room?.roomNumber }}</h5>
+        </div>
+
+        <div fxLayout fxLayoutGap="30px">
+          <h4>Room Cost :</h4>
+          <h5>{{ patient?.room?.roomCost }}</h5>
+        </div>
+
+        <div fxLayout fxLayoutGap="30px">
+          <h4>Days In :</h4>
+          <h5>{{ daysInRoom }}</h5>
+        </div>
+      </div>
+      <div>
+        <form fxLayout="column" (submit)="onSaveBill(bill)" #bill="ngForm">
+          <mat-form-field *ngIf="!outpatient">
+            <!-- <mat-label>Total Cost</mat-label> -->
+            <input
+              matInput
+              type="text"
+              [ngModel]="totalRoomCost"
+              name="roomCost"
+              #roomCost="ngModel"
+              placeholder="Total Room Cost"
+              disabled
+            />
+          </mat-form-field>
+          <div  >
+            <mat-divider></mat-divider>
+          </div>
+          <!-- pres table -->
+
+          <h3 fxLayout fxLayoutAlign="center center">
+            Medicine Cost
+          </h3>
+          <h3
+            *ngIf="presList?.length === 0"
+            fxLayout
+            fxLayoutAlign="center"
+            style="color:red"
+          >
+            No Medicine added yet!
+          </h3>
+          <div *ngIf="presList?.length === 0">
+            <mat-divider></mat-divider>
+          </div>
+          <div *ngIf="presList?.length > 0" class="mat-elevation-z8">
+            <mat-table mat-table [dataSource]="presList">
+              <ng-container matColumnDef="index">
+                <mat-header-cell *matHeaderCellDef>Index</mat-header-cell>
+                <mat-cell *matCellDef="let pres; let i = index">{{
+                  i + 1
+                }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="medicine">
+                <mat-header-cell *matHeaderCellDef> Drug Name</mat-header-cell>
+                <mat-cell *matCellDef="let pres">{{
+                  pres?.medicine?.name
+                }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="dose">
+                <mat-header-cell *matHeaderCellDef>Dose</mat-header-cell>
+                <mat-cell *matCellDef="let pres">{{
+                  pres?.medicine?.cost
+                }}</mat-cell>
+              </ng-container>
+
+              <mat-header-row
+                *matHeaderRowDef="displayedColumns"
+              ></mat-header-row>
+              <mat-row
+                *matRowDef="let row; columns: displayedColumns"
+              ></mat-row>
+            </mat-table>
+          </div>
+
+          <!-- end of pres table -->
+          <mat-form-field *ngIf="presList?.length > 0">
+            <input
+              matInput
+              type="text"
+              [ngModel]="totalPrescreptioncost"
+              name="presCost"
+              #presCost="ngModel"
+              placeholder="Medicine Cost"
+              disabled
+            />
+          </mat-form-field>
+
+          <!-- start of Service Table -->
+          <h3 fxLayout fxLayoutAlign="center center">
+            Service Cost
+          </h3>
+          <h3
+            *ngIf="pService?.length === 0"
+            fxLayout
+            fxLayoutAlign="center"
+            style="color:red"
+          >
+            No Services added yet!
+          </h3>
+          <div *ngIf="pService?.length > 0" class="mat-elevation-z8">
+            <mat-table mat-table [dataSource]="pService">
+              <ng-container matColumnDef="index">
+                <mat-header-cell *matHeaderCellDef>Index</mat-header-cell>
+                <mat-cell *matCellDef="let service; let i = index">{{
+                  i + 1
+                }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="service">
+                <mat-header-cell *matHeaderCellDef>
+                  Service Name</mat-header-cell
+                >
+                <mat-cell *matCellDef="let service">
+                  {{ service?.pService.serviceName }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="category">
+                <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+                <mat-cell *matCellDef="let service"
+                  >{{ service?.pService.serviceCost }}
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row
+                *matHeaderRowDef="serviceColumns"
+              ></mat-header-row>
+              <mat-row *matRowDef="let row; columns: serviceColumns"></mat-row>
+            </mat-table>
+          </div>
+
+          <!-- end of Service Table -->
+
+          <mat-form-field *ngIf="pService?.length > 0">
+            <input
+              matInput
+              type="text"
+              [ngModel]="totalServiceCost"
+              name="serviceCost"
+              #serviceCost="ngModel"
+              placeholder="Service Cost"
+              disabled
+            />
+          </mat-form-field>
+
+          <button
+            *ngIf="totalRoomCost || totalServiceCost || totalPrescreptioncost"
+            fxFlexAlign="center"
+            type="submit"
+            mat-raised-button
+            color="primary"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</div>

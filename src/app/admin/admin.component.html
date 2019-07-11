@@ -1,0 +1,24 @@
+
+
+
+<div class="home">
+     <div class='chart'>
+
+
+            <canvas
+              baseChart
+              [datasets]= "pieChartData"
+              [labels]="pieChartLabels"
+              [options]="pieChartOptions"
+              [legend]="pieChartLegend"
+              [chartType]="pieChartType"
+              [colors]="pieChartColors"
+              >
+      </canvas>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+
+
+  <!-- style="display: block" -->

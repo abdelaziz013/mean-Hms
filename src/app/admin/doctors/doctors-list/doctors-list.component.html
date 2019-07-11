@@ -1,0 +1,106 @@
+<nav mat-tab-nav-bar>
+  <a
+    mat-stroked-button
+    mat-tab-link
+    routerLink="/admin/doctors"
+    routerLinkActive="router-link-active"
+  >
+  <i class="fas fa-plus"></i>
+    Add Doctor</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <h2>Doctors List</h2>
+</div>
+
+<div fxLayout fxLayoutAlign="center">
+    <mat-form-field class="filter">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear">
+        <mat-icon>search</mat-icon>
+      </button>
+      <input
+        matInput
+        class="search-input"
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Search"
+      />
+    </mat-form-field>
+</div>
+
+
+
+
+<div class="mat-elevation-z8">
+
+
+
+  <mat-table mat-table  [dataSource]=" dataSource" >
+
+
+    <ng-container matColumnDef="index" >
+      <mat-header-cell *matHeaderCellDef>Index</mat-header-cell>
+      <mat-cell *matCellDef="let doctor; let i = index">{{ i + 1 }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>name</mat-header-cell>
+      <mat-cell *matCellDef="let doctor">{{ doctor.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef>phone</mat-header-cell>
+      <mat-cell *matCellDef="let doctor">{{ doctor.phone }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="speciality">
+      <mat-header-cell *matHeaderCellDef>speciality</mat-header-cell>
+      <mat-cell *matCellDef="let doctor">{{ doctor.speciality }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rank">
+      <mat-header-cell *matHeaderCellDef>rank</mat-header-cell>
+      <mat-cell *matCellDef="let doctor">{{ doctor.rank }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actionsColumn">
+      <mat-header-cell
+      fxLayout
+      fxLayoutAlign="center"
+      class="action"
+       *matHeaderCellDef
+       >Actions</mat-header-cell>
+
+      <mat-cell
+        fxLayout
+        fxLayoutAlign="center"
+        fxLayout.lt-md="column"
+        *matCellDef="let doctor">
+        <a
+        fxFlex
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/admin/doctors/edit', doctor.id]"
+          >Edit
+        </a>
+        <a   fxFlex mat-raised-button color="accent" (click)="onDelete(doctor.id,doctor.name)">
+          Delete
+        </a>
+
+        <!-- <button mat-button (click)="openDialog(doctor.id)">Confirm box</button> -->
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    *ngIf="doctorList.length > 0"
+    [length]="doctorListLength"
+    [pageSize]="doctorsPerPage"
+    [pageSizeOptions]="pageSizeOption"
+    (page)="onChangPage($event)"
+  >
+  </mat-paginator>
+</div>

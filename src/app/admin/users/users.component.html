@@ -1,0 +1,112 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/admin/users-list">
+    <i class="fas fa-stream"></i>
+    Users List</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="600px" fxFlex.lt-sm="350px">
+    <h1 *ngIf="mode === 'add'" fxLayout fxLayoutAlign="center center">
+      User Information
+    </h1>
+    <h1 *ngIf="mode === 'edit'" fxLayoutAlign="center center" class="edit">
+      Edit {{ user?.name }} Information
+    </h1>
+
+    <form
+      (submit)="onAdduser(userForm)"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="25px"
+      #userForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="name"
+          placeholder="Name"
+          #name="ngModel"
+          required
+          [ngModel]="user?.name"
+        />
+        <mat-error *ngIf="name.invalid">Please enter name</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label> User Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="username"
+          [ngModel]="user?.username"
+          placeholder="User Name"
+          #username="ngModel"
+          required
+        />
+        <mat-error *ngIf="username.invalid">Please enter Username</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Passward</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Passward"
+          ngModel
+          name="password"
+          #password="ngModel"
+          required
+        />
+        <mat-error *ngIf="password.invalid">Please enter Passward</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Select user Role</mat-label>
+        <mat-select
+          [ngModel]="user?.userRole"
+          name="userRole"
+          #userRole="ngModel"
+          [(value)]="selected"
+          required
+        >
+          <mat-option *ngFor="let role of roles" [value]="role">{{
+            role
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="userRole.invalid">Please Select User Role</mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="selected === 'Doctor'" appearance="outline">
+        <mat-label>Select Doctor Name</mat-label>
+        <mat-select
+          [ngModel]="user?.doctor"
+          name="doctorId"
+          #doctorId="ngModel"
+          required
+        >
+          <mat-option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{
+            doctor.name
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="doctorId.invalid"
+          >Please Select Doctor name</mat-error
+        >
+      </mat-form-field>
+
+      <button
+        *ngIf="mode === 'add'"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        Save
+      </button>
+      <button *ngIf="mode === 'edit'" type="submit" mat-button color="primary">
+        Edit
+      </button>
+    </form>
+  </mat-card>
+</div>

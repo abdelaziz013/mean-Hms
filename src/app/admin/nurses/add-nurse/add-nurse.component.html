@@ -1,0 +1,94 @@
+<div fxLayout="row" fxLayout.lt-md="column" >
+<nav
+
+mat-tab-nav-bar fxFlex='40%'>
+  <a mat-stroked-button mat-tab-link  routerLink="/admin/nurses-list">
+    <i class="fas fa-stream"></i>
+    Nurses List</a
+  >
+  <a mat-stroked-button mat-tab-link  routerLink="/admin/add-nurse-shift">
+    <i class="fas fa-plus"></i>
+    Add Shift</a
+  >
+
+  <a mat-stroked-button mat-tab-link routerLink="/admin/nurseshift-list">
+    <i class="fas fa-stream"></i>
+    Shift List</a
+  >
+</nav>
+<nav mat-tab-nav-bar fxFlex='60%' >
+  <a mat-stroked-button mat-tab-link  routerLink="/admin/assign-nurseshift">
+    <i class="far fa-hand-point-right"></i>
+    Assign Shift
+  </a>
+  <a mat-stroked-button mat-tab-link routerLink="/admin/roster-list">
+    <i class="fas fa-stream"></i>
+    Nurses Roster</a
+  >
+
+</nav>
+</div>
+
+
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+    <h1 *ngIf="mode==='add'"  fxLayout fxLayoutAlign="center center">Nurses Information</h1>
+    <h1 *ngIf="mode==='edit'" fxLayoutAlign="center center" class="edit">Edit {{nurse?.name}} Information</h1>
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="onSave(nurseForm)"
+      #nurseForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="name"
+          [ngModel] ="nurse?.name"
+          placeholder="Nurses Name"
+          #name="ngModel"
+          required
+        />
+        <mat-error *ngIf="name.invalid&&name.touched">Please enter Nurse Name</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input
+          matInput
+          type="text"
+          name="phone"
+          [ngModel]="nurse?.phone"
+          placeholder="Phone"
+          #phone="ngModel"
+          required
+        />
+        <mat-error *ngIf="phone.invalid&&phone.touched">Please enter phone Number</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <input
+          matInput
+          type="text"
+          name="address"
+          [ngModel]="nurse?.address"
+          placeholder="Address"
+          #address="ngModel"
+          required
+        />
+        <mat-error *ngIf="address.invalid&&address.touched">Please enter phone Number</mat-error>
+      </mat-form-field>
+
+
+
+      <button *ngIf="mode==='add'" type="submit" mat-raised-button color="primary">Save</button>
+      <button *ngIf="mode==='edit'" type="submit" mat-raised-button color="accent">Edit</button>
+    </form>
+  </mat-card>
+
+</div>

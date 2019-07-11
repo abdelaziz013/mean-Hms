@@ -1,0 +1,217 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/reception/out-patient">
+    <i class="fas fa-walking"></i>
+    Out-Patients List</a
+  >
+  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+    <i class="fas fa-procedures"></i>
+    In-Patients List</a
+  ><a mat-stroked-button mat-tab-link routerLink="/reception/bill-list">
+    <i class="fas fa-file-invoice-dollar"></i>
+    Bill List</a
+  >
+</nav>
+
+
+ <div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+    <h1 *ngIf="mode==='add'" fxLayout fxLayoutAlign="center center">Patient Informatin</h1>
+    <h1 *ngIf="mode==='edit'" fxLayoutAlign="center center" class="edit">Edit {{patient?.name}} Information</h1>
+
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="onSave(patientForm)"
+      #patientForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Patient Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="name"
+          [ngModel]="patient?.name"
+          placeholder="Patient Name"
+          #name="ngModel"
+          required
+        />
+        <mat-error *ngIf="name.invalid && name.touched"
+          >Please enter Patient Name</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input
+          [ngModel]="patient?.birthDate"
+          #birthDate="ngModel"
+          name="birthDate"
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Enter Birthdate"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="birthDate.invalid && birthDate.touched"
+          >Please enter Patient Birth Date</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <input
+          matInput
+          type="text"
+          name="address"
+          [ngModel]="patient?.address"
+          placeholder="Patient Address"
+          #address="ngModel"
+          required
+        />
+        <mat-error *ngIf="address.invalid && address.touched"
+          >Please enter Patient Address</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input
+          matInput
+          type="text"
+          name="phone"
+          [ngModel]="patient?.phone"
+          placeholder="Patient Phone"
+          #phone="ngModel"
+          required
+        />
+        <mat-error *ngIf="phone.invalid && phone.touched"
+          >Please enter Patient phone</mat-error
+        >
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Marital Status</mat-label>
+        <mat-select
+          [ngModel]="patient?.maritalStatus"
+          name="mstate"
+          #mstate="ngModel"
+          required
+        >
+          <mat-option *ngFor="let state of maritalStatus" [value]="state">
+            {{ state }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="mstate.invalid && mstate.touched">Please enter Marital Status</mat-error
+      >
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+          <mat-label>gender</mat-label>
+          <mat-select
+            [ngModel]="patient?.gender"
+            name="gender"
+            #gender="ngModel"
+            required
+          >
+            <mat-option *ngFor="let gender of sex" [value]="gender">
+              {{ gender }}</mat-option
+            >
+          </mat-select>
+          <mat-error *ngIf="gender.invalid && gender.touched">Please enter Patient gender</mat-error
+        >
+        </mat-form-field>
+        <mat-form-field
+
+           appearance="outline">
+            <mat-label>Patient Type</mat-label>
+            <mat-select
+              [ngModel]="patient?.patientType"
+              name="type"
+              #type="ngModel"
+              [(value)]="selected"
+              required
+            >
+              <mat-option *ngFor="let type of patientType " [disabled]="mode==='edit'" [value]="type">
+                {{ type }}</mat-option
+              >
+            </mat-select>
+            <mat-error *ngIf="type.invalid && type.touched">Please choose Patient Type</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field
+        *ngIf="selected === 'InPatient' &&  emptyroomList.length>0"
+        appearance="outline">
+            <mat-label>Room Number</mat-label>
+            <mat-select
+              [ngModel]="patient?.room"
+              name="pRoom"
+              #pRoom="ngModel"
+              required
+
+            >
+              <mat-option *ngFor="let room of  emptyroomList " [value]="room._id">
+                {{ room.roomNumber }}</mat-option
+              >
+            </mat-select>
+            <mat-error *ngIf="pRoom.invalid && pRoom.touched">Please choose Room</mat-error
+          >
+        </mat-form-field>
+
+<div *ngIf="selected === 'InPatient' &&  emptyroomList.length === 0">
+  <h2 class="edit" > No Rooms Available</h2>
+</div>
+        <mat-form-field
+        *ngIf="selected === 'OutPatient' || editOpc"
+        appearance="outline">
+            <mat-label>OPCs</mat-label>
+            <mat-select
+              [ngModel]="patient?.opc"
+              name="opc"
+              #opc="ngModel"
+              required
+            >
+
+              <mat-option *ngFor="let opc of opcList " [value]="opc._id">
+                {{ opc.name }}</mat-option
+              >
+            </mat-select>
+            <mat-error *ngIf="opc.invalid && opc.touched">Please choose OPC</mat-error
+          >
+        </mat-form-field>
+<!-- caring doctor -->
+         <mat-form-field  appearance="outline">
+            <mat-label>Caring Doctor</mat-label>
+            <mat-select
+              [ngModel]="patient?.caringDoctor"
+              name="doctor"
+              #doctor="ngModel"
+              required
+            >
+              <mat-option *ngFor="let doctor of doctorList " [value]=" doctor.id">
+                {{ doctor.name }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="doctor.invalid && doctor.touched">Please choose Caring Doctor</mat-error
+          >
+        </mat-form-field>
+
+
+
+
+
+      <!-- [(value)]="selected" -->
+
+<!-- <div *ngIf="selected !== 'InPatient' &&  emptyroomList.length  > 0" > -->
+
+      <button
+      [disabled]="selected === 'InPatient' &&  emptyroomList.length === 0"
+
+      *ngIf="mode==='add'" type="submit" mat-raised-button color="primary">Save</button>
+      <button *ngIf="mode==='edit'" type="submit" mat-button color="primary">Edit</button>
+    <!-- </div> -->
+
+    </form>
+  </mat-card>
+</div> 

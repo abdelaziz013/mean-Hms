@@ -1,0 +1,144 @@
+<mat-toolbar>
+  <div style="margin:auto" class="logo" fxLayout fxLayoutAlign="center">
+    <!-- <img style="height: 35px" src="../../../assets/image/logo2.jpg" /> -->
+    <p style="font-size: 40px">H <span> M </span> S</p>
+  </div>
+</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="center">
+  <h4 style="color:#36b0e3;font-weight:400">{{ userRole }}</h4>
+</div>
+
+<mat-nav-list>
+  <a
+    mat-list-item
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLink="/admin"
+    (click)="onClose()"
+    ><i class="fas fa-home"></i> Home</a
+  >
+  <mat-divider></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Admin'"
+    routerLinkActive="active-link"
+    routerLink="/admin/doctors"
+    (click)="onClose()"
+    ><i class="fas fa-user-md"></i> Doctors</a
+  >
+  <mat-divider *ngIf="userRole === 'Admin'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Admin'"
+    routerLinkActive="active-link"
+    routerLink="/admin/reception"
+    (click)="onClose()"
+    ><i class="fas fa-user"></i> Reception</a
+  >
+  <mat-divider *ngIf="userRole === 'Admin'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Admin'"
+    routerLinkActive="active-link"
+    routerLink="/admin/add-nurse"
+    (click)="onClose()"
+    ><i class="fas fa-user-nurse"></i> Nurses</a
+  >
+  <mat-divider *ngIf="userRole === 'Admin'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Nurse' "
+    routerLinkActive="active-link"
+    routerLink="/admin/roster-list"
+    (click)="onClose()"
+    ><i class="fas fa-user-nurse"></i> Nurses Roster</a
+  >
+  <mat-divider *ngIf="userRole === 'Nurse'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Admin'"
+    routerLinkActive="active-link"
+    routerLink="/admin/opc"
+    (click)="onClose()"
+    ><i class="fas fa-clinic-medical"></i> OPCs</a
+  >
+  <mat-divider *ngIf="userRole === 'Admin'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Admin'"
+    routerLinkActive= "active-link"
+    routerLink="/admin/services"
+    (click)="onClose()"
+    ><i class="fas fa-briefcase"></i> Services</a
+  >
+  <mat-divider *ngIf="userRole === 'Admin'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Admin'"
+    routerLinkActive= "active-link"
+    routerLink="/admin/room"
+    (click)="onClose()"
+    ><i class="fas fa-bed"></i> Rooms</a
+  >
+  <mat-divider *ngIf="userRole === 'Admin'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Admin'"
+    routerLinkActive= "active-link"
+    routerLink="/admin/medicine"
+    (click)="onClose()"
+    ><i class="fas fa-prescription-bottle-alt"></i> Medicine</a
+  >
+  <mat-divider *ngIf="userRole === 'Admin'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Admin'"
+    routerLinkActive= "active-link"
+    routerLink="/admin/users"
+    (click)="onClose()"
+    ><i class="fas fa-users"></i> Users</a
+  >
+  <mat-divider *ngIf="userRole === 'Admin'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Reception'"
+    routerLinkActive= "active-link"
+    routerLink="/reception/patient"
+    (click)="onClose()"
+    ><i class="fas fa-wheelchair"></i> Patients</a
+  >
+  <mat-divider *ngIf="userRole === 'Reception'"></mat-divider>
+
+  <a
+    mat-list-item
+    *ngIf="userRole === 'Doctor'"
+    routerLinkActive= "active-link"
+    routerLink="/doctor/patient"
+    (click)="onClose()"
+    ><i class="fas fa-wheelchair"></i> Patients</a
+  >
+  <mat-divider *ngIf="userRole === 'Doctor'"></mat-divider>
+
+  <a
+  mat-list-item
+  *ngIf="userRole === 'Nurse'"
+  routerLinkActive= "active-link"
+  routerLink="/reception/in-patient"
+  (click)="onClose()"
+  ><i class="fas fa-wheelchair"></i> In-Patients</a
+>
+<mat-divider *ngIf="userRole === 'Nurse'"></mat-divider>
+
+
+  <mat-nav-list> </mat-nav-list
+></mat-nav-list>

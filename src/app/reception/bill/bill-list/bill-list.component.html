@@ -1,0 +1,96 @@
+<nav mat-tab-nav-bar>
+  <a
+    *ngIf="userRole === 'Reception'"
+    mat-stroked-button
+    mat-tab-link
+    routerLink="/reception/patient"
+    routerLinkActive="router-link-active"
+  >
+    <i class="fas fa-plus"></i>
+    Add Patient</a
+  >
+
+  <a mat-stroked-button mat-tab-link routerLink="/reception/out-patient">
+    <i class="fas fa-walking"></i>
+    Out-Patients List</a
+  >
+  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+    <i class="fas fa-procedures"></i>
+    In-patient List</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <h2>Bill List</h2>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table mat-table [dataSource]="billList">
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef>Index</th>
+      <td mat-cell *matCellDef="let doctor; let i = index">{{ i + 1 }}</td>
+    </ng-container>
+    <ng-container matColumnDef="patientName">
+      <th mat-header-cell *matHeaderCellDef>Patient Name</th>
+      <td mat-cell *matCellDef="let bill">{{ bill?.patient?.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="roomCost">
+      <th mat-header-cell *matHeaderCellDef>roomCost</th>
+      <td mat-cell *matCellDef="let bill">
+          <div *ngIf="!bill.roomCost"> Outpaient</div>
+          <div style="color:blueviolet"  >
+              {{ bill?.roomCost }} <span *ngIf="bill.roomCost">L.E</span>
+          </div>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="serviceCost">
+      <th mat-header-cell *matHeaderCellDef>service Cost</th>
+
+      <td mat-cell *matCellDef="let bill">
+          <div *ngIf="!bill.serviceCost"> No cost</div>
+          <div style="color:blueviolet"  >
+              {{ bill?.serviceCost }} <span *ngIf="bill.serviceCost">L.E</span>
+          </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="medCost">
+      <th mat-header-cell *matHeaderCellDef>Medicine Cost</th>
+      <td mat-cell *matCellDef="let bill">
+          <div *ngIf="!bill.medicineCost"> No cost</div>
+          <div style="color:blueviolet"  >
+              {{ bill?.medicineCost }} <span *ngIf="bill.medicineCost">L.E</span>
+          </div>
+
+
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdBy">
+      <th mat-header-cell *matHeaderCellDef>Created By</th>
+      <td mat-cell *matCellDef="let bill">{{ bill?.creator?.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actionsColumn">
+      <th mat-header-cell  *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let bill">
+        <a
+          *ngIf="userRole === 'Reception'"
+          mat-button
+          color="warn"
+          matTooltip="print Bill"
+          [routerLink]="['/reception/print-bill/', bill?._id]"
+        >
+          <mat-icon>print</mat-icon>
+        </a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

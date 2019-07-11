@@ -1,0 +1,114 @@
+<nav mat-tab-nav-bar>
+  <a
+    *ngIf="userRole === 'Reception'"
+    mat-stroked-button
+    mat-tab-link
+    routerLink="/reception/patient"
+    routerLinkActive="router-link-active"
+  >
+    <i class="fas fa-plus"></i>
+    Add Patient</a
+  >
+
+  <a mat-stroked-button mat-tab-link routerLink="/reception/out-patient">
+    <i class="fas fa-walking"></i>
+    Out-Patients List</a
+  >
+  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+    <i class="fas fa-procedures"></i>
+    In-Patients List</a
+  >
+  <a
+    *ngIf="userRole === 'Reception'"
+    mat-stroked-button
+    mat-tab-link
+    routerLink="/reception/bill-list"
+  >
+    <i class="fas fa-file-invoice-dollar"></i>
+    Bill List</a
+  >
+</nav>
+
+<!-- bill detalies -->
+<h2 fxLayout fxLayoutAlign="center center">Patient Bill</h2>
+
+<div fxLayout="row" fxLayoutAlign="center" id="print-section">
+  <div fxFlex="80%" class="list">
+    <mat-card>
+      <div fxLayout fxLayoutAlign="center">
+        <h3>Bill</h3>
+      </div>
+
+      <div fxLayout="row" style="padding-left:10px" >
+        <div fxLayout="row" fxFlex="60%">
+          <h4 fxFlex="30% ">
+            Name :
+          </h4>
+          <p fxFlex>{{ patient?.name }}</p>
+        </div>
+
+        <div fxLayout fxFlex="40%">
+          <p>{{ patient?.patientType }}</p>
+        </div>
+      </div>
+
+      <div fxLayout="row" style="padding-left:10px" >
+        <h4 fxFlex="20% ">Caring Doctor :</h4>
+        <h4 style="color:black">{{ patient?.caringDoctor?.name }}</h4>
+      </div>
+
+      <div fxLayout="row" *ngIf="pateintType === 'InPatient'">
+        <div fxFlex="30% " class="border">
+          <h4>Room Cost</h4>
+        </div>
+        <div class="border" fxFlex="30% ">
+          <p>{{ bill?.roomCost }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="bill.serviceCost" fxLayout="row">
+        <div fxFlex="30% " class="border">
+          <h4>Service Cost :</h4>
+        </div>
+        <div class="border" fxFlex="30% ">
+          <p>{{ bill?.serviceCost }} L.E</p>
+        </div>
+      </div>
+
+      <div *ngIf="bill.medicineCost" fxLayout="row">
+        <div fxFlex="30% " class="border">
+          <h4>medicine Cost :</h4>
+        </div>
+        <div class="border" fxFlex="30%">
+          <p>{{ bill?.medicineCost }} L.E</p>
+        </div>
+      </div>
+
+      <div fxLayout="row" style="padding-left:10px" >
+        <h4 fxFlex="20% ">Total :</h4>
+        <p>{{ totalBillCost }} L.E</p>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<div fxLayout fxLayoutAlign="center center">
+  <button
+    class="print-btn"
+    [printStyle]="{
+      h4: { color: 'red' },
+      p: {
+        'padding-top': '7px',
+        'margin-left': '10px',
+        border: '1px solid black'
+      }
+    }"
+    mat-raised-button
+    color="accent"
+    printSectionId="print-section"
+    ngxPrint
+  >
+    <mat-icon>print</mat-icon>
+    print
+  </button>
+</div>

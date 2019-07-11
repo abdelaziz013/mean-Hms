@@ -10,7 +10,7 @@
       "severity": "warn"
     },
     "import-blacklist": [
-      true,
+        true,
       "rxjs/Rx"
     ],
     "interface-name": false,
@@ -73,3 +73,4 @@
     "directive-class-suffix": true
   }
 }
+

@@ -1,0 +1,88 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/admin/users">
+    <i class="fas fa-plus"></i>
+    Add User</a
+  >
+</nav>
+
+<div fxLayout fxLayoutAlign="center">
+  <h2>Users List</h2>
+</div>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-form-field class="filter">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+      <mat-icon>search</mat-icon>
+    </button>
+    <input
+      matInput
+      class="search-input"
+      (keyup)="applyFilter($event.target.value)"
+      placeholder="Search By Name"
+    />
+  </mat-form-field>
+</div>
+
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef> Index </mat-header-cell>
+      <mat-cell *matCellDef="let user; let i = index">{{ i + 1 }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{ user.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef> Username</mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{ user.username }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="userRole">
+      <mat-header-cell *matHeaderCellDef> User Role </mat-header-cell>
+      <mat-cell *matCellDef="let user"> {{ user.userRole }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actionsColumn">
+      <mat-header-cell
+      fxLayout
+      fxLayoutAlign="center"
+      class="action"
+      *matHeaderCellDef
+      > Actions
+    </mat-header-cell>
+      <mat-cell
+      fxLayout
+      fxLayoutAlign="center"
+      fxLayout.lt-md="column"
+      *matCellDef="let user">
+        <a
+          fXFlex
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/admin/edit-user/', user._id]"
+          >Edit
+        </a>
+        <button
+          fXFlex
+          mat-raised-button color="accent" (click)="onDelete(user._id,user.name)">
+          Delete
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    *ngIf="userList.length > 0"
+    [length]="userListLength"
+    [pageSize]="itemPerPage"
+    [pageSizeOptions]="pageSizeOption"
+    (page)="onChangPage($event)"
+  >
+  </mat-paginator>
+</div>

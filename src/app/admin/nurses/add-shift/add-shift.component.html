@@ -1,0 +1,84 @@
+<div fxLayout="row" fxLayout.lt-md="column" >
+    <nav mat-tab-nav-bar fxFlex='40%'>
+        <a mat-stroked-button mat-tab-link  routerLink="/admin/add-nurse">
+          <i class="fas fa-plus"></i>
+          Add Nurse</a
+        >
+        <a mat-stroked-button mat-tab-link  routerLink="/admin/nurses-list">
+          <i class="fas fa-stream"></i>
+          Nurses List</a
+        >
+
+      <a mat-stroked-button mat-tab-link routerLink="/admin/nurseshift-list">
+        <i class="fas fa-stream"></i>
+        Shift List</a
+      >
+    </nav>
+    <nav mat-tab-nav-bar fxFlex='60%' >
+      <a mat-stroked-button mat-tab-link  routerLink="/admin/assign-nurseshift">
+        <i class="far fa-hand-point-right"></i>
+        Assign Shift
+      </a>
+      <a mat-stroked-button mat-tab-link routerLink="/admin/roster-list">
+        <i class="fas fa-stream"></i>
+        Nurses Roster</a
+      >
+
+    </nav>
+    </div>
+
+<div fxLayout fxLayoutAlign="center">
+  <mat-card class="signup-form" fxFlex="700px" fxFlex.lt-sm="350px">
+    <h1 fxLayout fxLayoutAlign="center center">Add Shift</h1>
+
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      (submit)="onSave(shiftForm)"
+      #shiftForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Shift Name</mat-label>
+        <mat-select ngModel name="shiftName" #shiftName="ngModel">
+          <mat-option *ngFor="let shift of shiftsName" value="{{ shift }}">
+            {{ shift }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="shiftName.invalid && shiftName.touched">please choose shift name</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Start time</mat-label>
+        <input
+          [ngxTimepicker]="picker"
+          matInput
+          placeholder="start Time"
+          ngModel
+          #start="ngModel"
+          name="start"
+          required
+        />
+        <mat-error *ngIf="start.invalid && start.touched">please choose start time</mat-error>
+      </mat-form-field>
+      <ngx-material-timepicker #picker> </ngx-material-timepicker>
+
+      <mat-form-field appearance="outline">
+        <mat-label>End time</mat-label>
+        <input
+          [ngxTimepicker]="picker1"
+          matInput
+          placeholder="end Time"
+          ngModel
+          #end="ngModel"
+          name="end"
+          required
+        />
+        <mat-error *ngIf="end.invalid && end.touched">please choose end time</mat-error>
+      </mat-form-field>
+
+      <ngx-material-timepicker #picker1> </ngx-material-timepicker>
+
+      <button type="submit" mat-raised-button color="primary">Save</button>
+    </form>
+  </mat-card>
+</div>

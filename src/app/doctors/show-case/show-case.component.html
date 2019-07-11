@@ -1,0 +1,284 @@
+<nav mat-tab-nav-bar>
+  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+    <i class="fas fa-procedures"></i>
+    In-Patients List</a
+  >
+  <a mat-stroked-button mat-tab-link routerLink="/reception/out-patient">
+    <i class="fas fa-walking"></i>
+    Out-Patients List</a
+  >
+</nav>
+
+<!-- patient detalis -->
+
+<div
+  fxLayout="row"
+  fxLayoutAlign="center"
+  fxLayoutGap="20px"
+  fxLayout.lt-md="column"
+>
+  <div fxFlex="30%" class="list">
+    <mat-card>
+      <div fxLayout fxLayoutAlign="center">
+        <h3>Patient information</h3>
+      </div>
+      <div fxLayout fxLayoutAlign="center">
+        <h4>{{ patient?.patientType }}</h4>
+      </div>
+
+      <div>
+        <div fxLayout="row">
+          <button fxFlex="20% 2 1" mat-stroked-button color="primary">
+            Name
+          </button>
+          <p fxFlex>{{ patient?.name }}</p>
+        </div>
+
+        <div fxLayout="row">
+          <div fxFlex fxLayout="row">
+            <button mat-stroked-button color="primary">Age</button>
+            <p>{{ patientAge }}</p>
+          </div>
+
+          <div fxFlex fxLayout="row">
+            <button mat-stroked-button color="primary">Gender</button>
+            <p>{{ patient?.gender }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="patient?.patientType === 'InPatient'" fxLayout="row">
+          <button mat-stroked-button color="primary">Room Number</button>
+          <p>{{ patient?.room?.roomNumber }}</p>
+        </div>
+
+        <div *ngIf="patient?.patientType === 'OutPatient'" fxLayout="row">
+          <button mat-stroked-button color="primary">OPC</button>
+          <p>{{ patient?.opc?.name }}</p>
+        </div>
+
+        <div fxLayout="row">
+          <button mat-stroked-button color="primary">Caring Doctor</button>
+          <p>{{ patient?.caringDoctor?.name }}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- diagnosis -->
+  <div class="case-card" fxFlex>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <button mat-raised-button color="primary">
+              <mat-icon>assessment</mat-icon>
+              Diagnosis
+            </button>
+          </mat-panel-title>
+          <mat-panel-description> </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayout="column" *ngIf="diagnosis === null">
+          <h3 fxLayoutAlign="center">No Diagnosis added yet!</h3>
+          <button
+            style="margin:30px auto"
+            mat-button
+            color="primary"
+            [routerLink]="['/doctor/diagnosis', patient?._id]"
+          >
+            <mat-icon style="color:#8792d1">assessment</mat-icon>
+            Add Diagnosis
+          </button>
+        </div>
+        <div *ngIf="diagnosis !== null">
+          <div fxLayout="row">
+            <button mat-stroked-button color="primary">Symptoms</button>
+            <p>{{ diagnosis?.symptoms }}</p>
+          </div>
+
+          <div fxLayout="row">
+            <button mat-stroked-button color="primary">Signs</button>
+            <p>{{ diagnosis?.signs }}</p>
+          </div>
+
+          <div fxLayout="row">
+            <button mat-stroked-button color="primary">Past history</button>
+            <p>{{ diagnosis?.pastHistory }}</p>
+          </div>
+
+          <div fxLayout="row">
+            <button mat-stroked-button color="primary">Diagnosis</button>
+            <p>{{ diagnosis?.diagnosis }}</p>
+          </div>
+        </div>
+        <div
+          *ngIf="diagnosis !== null"
+          fxLayout
+          fxLayoutAlign="center"
+          class="action"
+        >
+          <a
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/doctor/diagnosis/', id]"
+            >Edit
+          </a>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="ondelete(id, patient?.name)"
+          >
+            Delete
+          </button>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <!-- prescription -->
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <button mat-raised-button color="accent">
+              <i class="fas fa-prescription action-icon "></i>
+              Prescription
+            </button>
+          </mat-panel-title>
+          <mat-panel-description> </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!-- start of table -->
+        <div fxLayout="column" *ngIf="presListLength === 0">
+          <h3 fxLayoutAlign="center">No Prescreption added yet!</h3>
+          <button
+            style="margin:30px auto"
+            mat-button
+            color="primary"
+            [routerLink]="['/doctor/prescription', patient?._id]"
+          >
+            <i
+              class="fas fa-prescription action-icon "
+              style="color:#8792d1"
+            ></i>
+            Add Prescription
+          </button>
+        </div>
+        <div *ngIf="presListLength > 0" class="mat-elevation-z8">
+          <mat-table mat-table [dataSource]="presList">
+            <ng-container matColumnDef="index">
+              <mat-header-cell *matHeaderCellDef>Index</mat-header-cell>
+              <mat-cell *matCellDef="let pres; let i = index">{{
+                i + 1
+              }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="medicine">
+              <mat-header-cell *matHeaderCellDef> Drug Name</mat-header-cell>
+              <mat-cell *matCellDef="let pres">{{
+                pres?.medicine?.name
+              }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="dose">
+              <mat-header-cell *matHeaderCellDef>Dose</mat-header-cell>
+              <mat-cell *matCellDef="let pres">{{ pres.dose }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef>actions</mat-header-cell>
+              <mat-cell *matCellDef="let pres">
+                <button
+                  (click)="deletePres(pres._id, pres?.medicine?.name)"
+                  mat-icon-button
+                  mat-icon-button
+                  color="warn"
+                >
+                  <mat-icon matTooltip="Delete">delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+        </div>
+
+        <!-- end of table -->
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <!-- Services -->
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <button class="service" mat-raised-button color="warn">
+              <i class="fas fa-file-medical-alt action-icon "></i>
+              Services
+            </button>
+          </mat-panel-title>
+          <mat-panel-description> </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayout="column" *ngIf="pService?.length === 0">
+          <h3 fxLayout fxLayoutAlign="center">No Services added yet!</h3>
+          <button
+            style="margin:30px auto"
+            mat-button
+            color="primary"
+            [routerLink]="['/doctor/services', patient?._id]"
+          >
+            <i
+              class="fas fa-file-medical-alt action-icon "
+              style="color:#8792d1"
+            ></i>
+            Add Services
+          </button>
+        </div>
+
+        <div *ngIf="pService?.length > 0" class="mat-elevation-z8">
+          <mat-table mat-table [dataSource]="pService">
+            <ng-container matColumnDef="index">
+              <mat-header-cell *matHeaderCellDef>Index</mat-header-cell>
+              <mat-cell *matCellDef="let service; let i = index">{{
+                i + 1
+              }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="service">
+              <mat-header-cell *matHeaderCellDef> Service Name</mat-header-cell>
+              <mat-cell *matCellDef="let service">
+                {{ service?.pService?.serviceName }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+              <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+              <mat-cell *matCellDef="let service"
+                >{{ service?.pService?.serviceCategory }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef>actions</mat-header-cell>
+              <mat-cell *matCellDef="let service">
+                <button
+                  (click)="deleteService(service._id,service?.pService?.serviceName)"
+                  mat-icon-button
+                  mat-icon-button
+                  color="warn"
+                >
+                  <mat-icon matTooltip="Delete">delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="serviceColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: serviceColumns"></mat-row>
+          </mat-table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
