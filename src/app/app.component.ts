@@ -15,12 +15,12 @@ export class AppComponent implements OnInit {
 
 
   constructor(private userService: UsersService,
-              private titleService: Title,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,
+    private titleService: Title,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
 
 
-    ) { }
+  ) { }
 
 
   ngOnInit() {
@@ -30,9 +30,15 @@ export class AppComponent implements OnInit {
       .events.pipe(
         filter(event => event instanceof NavigationEnd),
         map(() => {
-          const child = this.activatedRoute.firstChild;
+          let child;
+          if (this.activatedRoute.firstChild.children[0]) {
+            child = this.activatedRoute.firstChild.children[0]
+          } else {
+            child = this.activatedRoute.firstChild;
+          }
+
           if (child.snapshot.data['title']) {
-            return child.snapshot.data['title'];
+            return child.snapshot.data.title;
           }
           return appTitle;
         })
@@ -43,7 +49,7 @@ export class AppComponent implements OnInit {
 
 
 
-  }
+}
 
 
 

@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit {
  itemPerPage = null;
   currentPage = null;
   doctor;
-  selectedDoctor ="ahmed";
+ 
   constructor(public userService: UsersService,
               private route: ActivatedRoute,
               public doctorsService: DoctorsService,

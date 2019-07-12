@@ -86,7 +86,7 @@ export class UsersService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           this.saveAuthData(token, expirationDate, this.name, this.userRole, this.loginDoctor)
-          this.router.navigate(['admin'])
+          this.router.navigate(['home'])
         }
       })
   }

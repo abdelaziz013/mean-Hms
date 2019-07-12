@@ -10,7 +10,6 @@
     <h1 *ngIf="mode==='addDoctor'" fxLayout fxLayoutAlign="center center">Doctor Information</h1>
     <h1 *ngIf="mode==='edit'" fxLayoutAlign="center center" class="edit">Edit {{doctor?.name}} Information</h1>
     <form
-      *ngIf="!isLoading"
       fxLayout="column"
       fxLayoutAlign="center center"
       (submit)="onSaveDoctor(doctorForm)"

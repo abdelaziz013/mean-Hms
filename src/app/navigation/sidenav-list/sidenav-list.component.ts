@@ -16,7 +16,7 @@ export class SidenavListComponent implements OnInit {
   userIsAuthenticated = false;
   userId: string;
   name: string;
-  userRole: string;
+  userRole;
   private authListenerSubs: Subscription;
 
   constructor(private userService: UsersService) { }
