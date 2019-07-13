@@ -16,21 +16,17 @@ import { NrosterListComponent } from './nurses/nroster-list/nroster-list.compone
 import { OpcComponent } from './opc/opc.component';
 import { OpcListComponent } from './opc/opc-list/opc-list.component';
 import { ServicesComponent } from './services/services.component';
-
 import { ServiceListComponent } from './services/service-list/service-list.component';
 import { RoomListComponent } from './room/room-list/room-list.component';
 import { MedicineComponent } from './medicine/medicine.component';
 import { MedicineListComponent } from './medicine/medicine-list/medicine-list.component';
 import { UserListComponent } from './users/user-list/user-list.component';
-import { MaterialModule } from '../material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { RoomComponent } from './room/room.component';
-import { FormsModule } from '@angular/forms';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AddOpcshiftComponent } from './opc/add-opcshift/add-opcshift.component';
 import { OpcShiftlistComponent } from './opc/opc-shiftlist/opc-shiftlist.component';
 import { AssignOpcShiftComponent } from './opc/assign-opc-shift/assign-opc-shift.component';
 import { OpcrosterListComponent } from './opc/opcroster-list/opcroster-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -52,7 +48,6 @@ import { OpcrosterListComponent } from './opc/opcroster-list/opcroster-list.comp
     OpcShiftlistComponent,
     AssignOpcShiftComponent,
     OpcrosterListComponent,
-
     ServicesComponent,
     ServiceListComponent,
     RoomListComponent,
@@ -65,11 +60,7 @@ import { OpcrosterListComponent } from './opc/opcroster-list/opcroster-list.comp
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MaterialModule,
-    FlexLayoutModule,
-    FormsModule,
-    NgxMaterialTimepickerModule,
-
+    SharedModule
 
   ]
 })

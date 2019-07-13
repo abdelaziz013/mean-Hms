@@ -11,6 +11,7 @@ import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { InpatientListComponent } from '../reception/inpatient-list/inpatient-list.component';
 import { OutpatientListComponent } from '../reception/outpatient-list/outpatient-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,16 +19,16 @@ import { OutpatientListComponent } from '../reception/outpatient-list/outpatient
     AddPrescriptionComponent,
     PatientServicesComponent,
     ShowCaseComponent,
-   
-
   ],
   imports: [
     CommonModule,
     DoctorRoutingModule,
-    FlexLayoutModule,
-    MaterialModule,
+    // FlexLayoutModule,
+    // MaterialModule,
     ReactiveFormsModule,
-    FormsModule,
+    // FormsModule,
+    SharedModule,
+
 
   ]
 })
