@@ -4,7 +4,8 @@ import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 
 @Injectable({ providedIn: 'root' })
@@ -29,7 +30,8 @@ export class DoctorsService {
   getDoctors(doctorsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${doctorsPerPage}&page=${currentPage}`;
     this.http
-      .get<{ doctors: any, maxCount: number }>('http://localhost:3000/doctors' + queryParams)
+      // .get<{ doctors: any, maxCount: number }>('http://localhost:3000/doctors' + queryParams)
+      .get<{ doctors: any, maxCount: number }>( BACKEND_URL + '/doctors' + queryParams)
       .pipe(
         map(doctorsData => {
           return {
