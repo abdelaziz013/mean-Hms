@@ -2,178 +2,41 @@
 const express = require('express'),
   router = express.Router(),
   checkAuth = require('../middleware/check-auth'),
-  Diagnosis = require('../models/diagnosis'),
-  Prescreption = require('../models/prescreption'),
-  PService = require('../models/patient-service'),
-  Patient =require('../models/patient')
+  caseMangeController =require('../controller/case-mange')
 
 
 // add diagnosis
-router.post('/add-diagnosis/:id', checkAuth, (req, res) => {
-  Diagnosis.findOne({ patient: req.params.id }).then(diagnosis => {
-    if (diagnosis) {
-      res.status(401).json({
-        message: 'diagnosis has been done before'
-      })
-
-    } else {
-      const diagnosis = new Diagnosis({
-        symptoms: req.body.symptoms,
-        signs: req.body.signs,
-        pastHistory: req.body.pastHistory,
-        diagnosis: req.body.diagnosis,
-        patient: req.params.id,
-        creator: req.userData.userId
-      })
-
-      diagnosis.save().then(savedDiagnosis => {
-        Patient.findOne({_id:req.params.id}).then(patient=>{
-          res.status(200).json({
-            patient,
-            message: 'new diagnosis added'
-          })
-        })
-      })
-    }
-  })
-})
+router.post('/add-diagnosis/:id', checkAuth,caseMangeController.addDiagnosios )
 
 // add prescreption
-router.post('/add-prescription/:id', checkAuth, (req, res) => {
-
-  const newPrescribtion = new Prescreption({
-    dose: req.body.dose,
-    patient: req.params.id,
-    medicine: req.body.medicine,
-    creator: req.userData.userId
-  })
-  newPrescribtion.save().then(savedPresceiption => {
-    Patient.findOne({_id:req.params.id}).then(patient=>{
-      res.status(200).json({
-        patient,
-        message: 'new pprescription added'
-      })
-    })
-  })
-})
+router.post('/add-prescription/:id', checkAuth,caseMangeController.addPrescreption )
 
 // add patient-services
-router.post('/add-service/:id', checkAuth, (req, res) => {
-  const service = new PService({
-    patient: req.params.id,
-    pService: req.body.pService,
-    creator: req.userData.userId
-  })
-  service.save().then(savedService => {
-    Patient.findOne({_id:req.params.id}).then(patient=>{
-      res.status(200).json({
-        patient,
-        message: 'new pprescription added'
-      })
-    })
-  })
-})
+router.post('/add-service/:id', checkAuth,caseMangeController.addPatientService)
 
 
 // get Diagnosis by patient id
-router.get('/diagnisis/:id',(req,res)=>{
-  Diagnosis.findOne({patient: req.params.id}).then(diagnosis=>{
-    res.status(200).json({
-      diagnosis,
-      message:'one diagnosis found'
-    })
-
-  })
-})
+router.get('/diagnisis/:id',caseMangeController.getDiagnosisByPatientId)
 
 // get prescription
-router.get('/presciption/:id',checkAuth,(req,res)=>{
-  Prescreption.find({patient: req.params.id})
-  .populate('medicine')
-  .then(pres=>{
-    if(pres){
-      res.status(200).json({
-        pres,
-        message:"patient prescription"
-      })
-
-    }else{
-      res.status(404).json({
-        message:"no presciption found"
-      })
-    }
-
-  })
-})
+router.get('/presciption/:id',checkAuth,caseMangeController.getPrescription)
 
 
 // get Patient Service
-router.get('/service/:id',(req,res)=>{
-  PService.find({patient: req.params.id})
-  .populate('pService')
-      .then(pService=>{
-        if(pService){
-          res.status(200).json({
-            pService,
-            message:"pService was found"
-          })
-        }
-        // }else{
-        //   res.status(404).json({
-        //     message:'no service was found'
-        //   })
-        // }
-      })
-})
+router.get('/service/:id',caseMangeController.getPatientService)
 
 // edit diagnosis
-router.put('/edit/:id',checkAuth,(req,res)=>{
-  const diagnosis = new Diagnosis({
-    _id:req.body._id,
-    symptoms: req.body.symptoms,
-    signs: req.body.signs,
-    pastHistory: req.body.pastHistory,
-    diagnosis: req.body.diagnosis,
-    patient: req.params.id,
-    creator: req.userData.userId
-  })
-
-  Diagnosis.updateOne({patient: req.params.id},diagnosis).then(result=>{
-    res.status(200).json({
-      message:"one record updated"
-    })
-  })
-})
+router.put('/edit/:id',checkAuth,caseMangeController.editDiagnosis)
 
 // delete diagnosis
-router.delete('/delete/:id',(req,res)=>{
-  Diagnosis.deleteOne({patient: req.params.id}).then(result=>{
-    res.status(200).json({
-      message:'one record Deleted'
-    })
-  })
-})
+router.delete('/delete/:id',checkAuth,caseMangeController.deleteDiagnosis)
 
 // delete service
-router.delete('/deleteservice/:id',(req,res)=>{
-
-  PService.deleteOne({_id: req.params.id}).then(result=>{
-    res.status(200).json({
-      message:'one record Deleted'
-    })
-  })
-})
+router.delete('/deleteservice/:id',caseMangeController.deleteService)
 
 
 // delet pres
-
-router.delete('/deletepres/:id',(req,res)=>{
-  Prescreption.deleteOne({_id: req.params.id}).then(result=>{
-    res.status(200).json({
-      message:'one record Deleted'
-    })
-  })
-})
+router.delete('/deletepres/:id',caseMangeController.deletePrescription)
 
 
 
