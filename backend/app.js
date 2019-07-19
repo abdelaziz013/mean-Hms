@@ -15,23 +15,23 @@ const bodyParser = require("body-parser");
 
 
 
-const mongoDbUrl = 'mongodb://ahms:asd123@ds127536.mlab.com:27536/anhms'
 
 
-mongoose.connect('mongodb://localhost:27017/ahms', { useNewUrlParser: true }, (err, db) => {
-  if (err) {
-    return console.log('not connected to db',error)
-  }
-  console.log('connected to local db');
-})
 
-// mongoose.connect(mongoDbUrl, { useNewUrlParser: true }, (err, client) => {
+// mongoose.connect('mongodb://localhost:27017/ahms', { useNewUrlParser: true }, (err, db) => {
 //   if (err) {
-//     return console.log("unable to connect to mongodb server");
+//     return console.log('not connected to db',error)
 //   }
+//   console.log('connected to local db');
+// })
 
-//   console.log("conected to mongo db");
-// });
+mongoose.connect(process.env.mongoDbUrl, { useNewUrlParser: true }, (err, client) => {
+  if (err) {
+    return console.log("unable to connect to mongodb server");
+  }
+
+  console.log("conected to mongo db");
+});
 
 mongoose.Promise = global.Promise;
 

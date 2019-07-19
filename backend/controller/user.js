@@ -52,7 +52,7 @@ exports.login =(req,res,next)=>{
         username: fetchedUser.username,
         userdId: fetchedUser._id
         // name: fetchedUser.name
-      }, 'secert_this_should_be_longer', { expiresIn: '2h' });
+      }, process.env.JWT_KEY, { expiresIn: '2h' });
 
       res.status(200).json({
         token: token,

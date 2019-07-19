@@ -1,0 +1,6 @@
+{
+  "env":{
+    "mongoDbUrl":"mongodb://ahms:asd123@ds127536.mlab.com:27536/anhms",
+    "JWT_KEY":"secert_this_should_be_longer"
+  }
+}
