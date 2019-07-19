@@ -36,15 +36,19 @@ i {
   margin-bottom: 3px;
 }
 
-.mat {
-  margin: 15px;
-  color: white;
+.more{
+  margin-top:-20px;
+
 }
 
-.mat-a {
-  background-color: #2cb94c;
+.fa-plus{
+  color:white;
 }
 
-.mat-a:hover {
-  background-color: darkgreen;
+.submit{
+  margin:10px;
+}
+
+.fa-trash-alt{
+  color:white;
 }

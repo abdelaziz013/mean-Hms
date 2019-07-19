@@ -4,6 +4,8 @@ import { Diagnosis } from './diagnosis.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Patient } from '../reception/patient/patient.model';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class DiagnosisServiceService {
   // add diagnosis
   addDignosis(id: string, diagnosis: Diagnosis) {
     this.http
-      .post<{ message: string, patient: Patient }>('http://localhost:3000/casemange/add-diagnosis/' + id, diagnosis)
+      .post<{ message: string, patient: Patient }>(BACKEND_URL+'/casemange/add-diagnosis/' + id, diagnosis)
       .subscribe((responseData) => {
           this.router.navigate(['/doctor/show-case', responseData.patient._id])
       })
@@ -28,7 +30,7 @@ export class DiagnosisServiceService {
   // get diagnosis
   getDiagnosis(id: string) {
     this.http
-      .get<{ diagnosis: Diagnosis, message: string }>('http://localhost:3000/casemange/diagnisis/' + id)
+      .get<{ diagnosis: Diagnosis, message: string }>(BACKEND_URL+'/casemange/diagnisis/' + id)
       .subscribe((responseData) => {
         this.diagnosis = responseData.diagnosis;
         this.diagnosisupdate.next({
@@ -46,7 +48,7 @@ export class DiagnosisServiceService {
 
   // update Diagnosis
   updateDiagnosis(id: string, diagnosis: Diagnosis) {
-    this.http.put('http://localhost:3000/casemange/edit/' + id, diagnosis)
+    this.http.put(BACKEND_URL+'/casemange/edit/' + id, diagnosis)
       .subscribe((response) => {
         this.router.navigate(['/doctor/show-case',id])
       });
@@ -54,7 +56,7 @@ export class DiagnosisServiceService {
 
   // delete diagnosis
   deleteDiagnosis(id: string) {
-    return this.http.delete('http://localhost:3000/casemange/delete/' + id)
+    return this.http.delete(BACKEND_URL+'/casemange/delete/' + id)
   }
 
 

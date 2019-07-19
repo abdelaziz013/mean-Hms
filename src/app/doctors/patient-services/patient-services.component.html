@@ -1,6 +1,4 @@
-<nav
-*ngIf="userRole === 'Doctor'"
-mat-tab-nav-bar>
+<nav *ngIf="userRole === 'Doctor'" mat-tab-nav-bar>
   <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
     <i class="fas fa-procedures"></i>
     In-Patients List</a
@@ -17,14 +15,16 @@ mat-tab-nav-bar>
     <h1 fxLayout fxLayoutAlign="center center">Add Service</h1>
 
     <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
-      <div formArrayName="service">
+      <div
+        formArrayName="service"
+        *ngFor="let item of service.controls; let i = index"
+      >
         <div
           fxLayout="row"
           fxLayoutAlign="center center"
           fxLayout.lt-md="column"
           fxLayoutGap="20px"
-          *ngFor="let item of service.controls; let serviceIndex = index"
-          [formGroupName]="serviceIndex"
+          [formGroupName]="i"
         >
           <mat-form-field appearance="outline" fxFlex>
             <mat-label>Service</mat-label>
@@ -37,33 +37,43 @@ mat-tab-nav-bar>
                 {{ serviceName.serviceName }}
               </mat-option>
             </mat-select>
+            <mat-error
+              *ngIf="
+                serviceForm.controls.service.controls[i].controls.pService
+                  .touched &&
+                serviceForm.controls.service.controls[i].controls.pService
+                  .invalid
+              "
+            >
+              please enter service name
+            </mat-error>
           </mat-form-field>
-        </div>
-
-        <div fxLayout fxLayoutAlign="center center">
-          <button
-            type="button"
-            class="mat mat-a"
-            mat-raised-button
+          <a
+            *ngIf="i === 0"
+            mat-mini-fab
+            matTooltip="Add More Services"
+            class="more"
             color="primary"
             (click)="addService()"
           >
-            Add
-          </button>
-          <button
-            type="button"
-            class="mat"
-            mat-raised-button
-            color="accent"
-            (click)="removeService(serviceIndex)"
+            <i class="fas fa-plus action-icon "></i>
+          </a>
+          <a
+            *ngIf="i >= 1"
+            matTooltip="Delete"
+            class="more"
+            mat-mini-fab
+            color="warn"
+            (click)="removeService(i)"
           >
-            Delete
-          </button>
+            <i class="far fa-trash-alt"></i>
+          </a>
         </div>
       </div>
-
       <div fxLayout fxLayoutAlign="center center">
-        <button type="submit" mat-raised-button color="primary">Save</button>
+        <button type="submit" mat-raised-button color="primary" class="submit">
+          Save
+        </button>
       </div>
     </form>
   </mat-card>

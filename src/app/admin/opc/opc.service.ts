@@ -7,7 +7,9 @@ import { Subject } from 'rxjs';
 import { OpcShift } from './opc-shift.model';
 import { OpcRoster } from './opc-roster.model';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
+import * as moment from 'moment';import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +33,7 @@ export class OpcService {
 
   // addOpc
   addOpc(opc: Opc) {
-    this.http.post<{ message: string }>('http://localhost:3000/opc/add-opc', opc)
+    this.http.post<{ message: string }>(BACKEND_URL+'/opc/add-opc', opc)
       .subscribe((response) => {
         this.router.navigate(['/admin/opc-list'])
       })
@@ -40,7 +42,7 @@ export class OpcService {
   // get opcList
   getOpc() {
     this.http
-      .get<{ opc: Opc[] }>('http://localhost:3000/opc/opc-list')
+      .get<{ opc: Opc[] }>(BACKEND_URL+'/opc/opc-list')
       .subscribe((opcData) => {
         this.opc = opcData.opc
         this.opcUpdate.next({
@@ -55,13 +57,13 @@ export class OpcService {
 
   // delete opc
   deleteOpc(id: string) {
-    return this.http.delete('http://localhost:3000/opc/delete-opc/' + id)
+    return this.http.delete(BACKEND_URL+'/opc/delete-opc/' + id)
   }
 
 
   // add opcShift
   addOpcShift(opcShift: OpcShift) {
-    this.http.post<{ message: string }>('http://localhost:3000/opc/add-opcshift', opcShift)
+    this.http.post<{ message: string }>(BACKEND_URL+'/opc/add-opcshift', opcShift)
       .subscribe((response) => {
         this.router.navigate(['/admin/opcshift-list'])
       })
@@ -70,7 +72,7 @@ export class OpcService {
   // get opc shift
   getOpcShift() {
     this.http
-      .get<{ opcShift: OpcShift[] }>('http://localhost:3000/opc/opc-shift')
+      .get<{ opcShift: OpcShift[] }>(BACKEND_URL+'/opc/opc-shift')
       .subscribe((responseData) => {
         this.opcShift = responseData.opcShift,
           this.opcShiftUpdate.next({
@@ -85,13 +87,13 @@ export class OpcService {
 
   // delete opc Shift
   deleteOpcShift(id: string) {
-    return this.http.delete('http://localhost:3000/opc/delete-opcshift/' + id)
+    return this.http.delete(BACKEND_URL+'/opc/delete-opcshift/' + id)
   }
 
   // add roster
   addopcRoster(roster: OpcRoster) {
     this.http
-      .post<{ mesage: string }>('http://localhost:3000/opc/assign-opcshift', roster)
+      .post<{ mesage: string }>(BACKEND_URL+'/opc/assign-opcshift', roster)
       .subscribe((response) => {
         this.router.navigate(['/admin/opcroster-list'])
       })
@@ -101,7 +103,7 @@ export class OpcService {
   // get opc Roster
   getroster(itemPerPage: number, currentpage) {
     const queryParams = `?pagesize=${itemPerPage}&page=${currentpage}`;
-    this.http.get<{ roster: OpcRoster[], maxCount: number }>('http://localhost:3000/opc/roster/list' + queryParams)
+    this.http.get<{ roster: OpcRoster[], maxCount: number }>(BACKEND_URL+'/opc/roster/list' + queryParams)
       .pipe(map(data => {
         return {
           roster: data.roster.map(roster => {
@@ -135,12 +137,12 @@ export class OpcService {
 
   // getroster by id
   getOpcRosterById(id:string){
-    return this.http.get<{roster:OpcRoster}>('http://localhost:3000/opc/opc-roster/' + id)
+    return this.http.get<{roster:OpcRoster}>(BACKEND_URL+'/opc/opc-roster/' + id)
   }
 
   // update rostte
   updateRoster(id:string,roster:OpcRoster){
-    this.http.put('http://localhost:3000/opc/edit-roster/' + id,roster)
+    this.http.put(BACKEND_URL+'/opc/edit-roster/' + id,roster)
     .subscribe((response)=>{
 
       this.router.navigate(['/admin/opcroster-list'])
@@ -149,7 +151,7 @@ export class OpcService {
 
   // delete roster
   deleteopcRoster(id:string){
-    return this.http.delete('http://localhost:3000/opc/del-roster/' + id)
+    return this.http.delete(BACKEND_URL+'/opc/del-roster/' + id)
   }
 
 }

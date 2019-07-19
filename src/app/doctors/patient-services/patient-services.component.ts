@@ -40,17 +40,13 @@ export class PatientServicesComponent implements OnInit, OnDestroy {
   serviceForm: FormGroup;
 
   ngOnInit() {
-    // this.serviceForm = new FormGroup({
-    //   services: new FormControl(null, Validators.required)
-    // })
-
 
     // array of service
     this.serviceForm = this.fb.group({
       service: this.fb.array([
         this.fb.group({
           _id: '',
-          pService: ''
+          pService: ['',Validators.required]
         })
       ])
     })
@@ -92,7 +88,7 @@ export class PatientServicesComponent implements OnInit, OnDestroy {
   addService() {
     this.service.push(this.fb.group({
       _id: '',
-      pService: ''
+      pService: ['',Validators.required]
 
     }
     ));

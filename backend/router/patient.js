@@ -4,13 +4,13 @@ const express = require("express"),
   const patientController =require('../controller/patient')
 
 // add patient
-router.post("/add-patient", checkAuth,patientController.addPatient);
+router.post("/add-patient",checkAuth,patientController.addPatient);
 
 // get in-patient
-router.get("/in-patient", patientController.getInpatient);
+router.get("/in-patient",checkAuth, patientController.getInpatient);
 
 //get out patient
-router.get("/out-patient",patientController.getOutPatient );
+router.get("/out-patient",checkAuth,patientController.getOutPatient );
 
 // get patient by id
 router.get("/patient/:id",checkAuth,patientController.getPatientById );

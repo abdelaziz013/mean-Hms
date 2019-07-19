@@ -3,6 +3,9 @@ import { Reception } from './reception.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,7 @@ export class ReceptionService {
   // add recception
   addReception(reception: Reception){
     this.http
-      .post<{message: string}>('http://localhost:3000/reception/add-reception', reception)
+      .post<{message: string}>(BACKEND_URL+'/reception/add-reception', reception)
       .subscribe((responseData) => {
         this.router.navigate(['/admin/reception-list']);
       });
@@ -27,7 +30,7 @@ getReception(receptionPerPage: number, currentpage: number){
 
   const queryParams = `?pagesize=${receptionPerPage}&page=${currentpage}`;
   this.http
-  .get<{reception: Reception[], maxCount: number}>('http://localhost:3000/reception/reception-list' + queryParams)
+  .get<{reception: Reception[], maxCount: number}>(BACKEND_URL+'/reception/reception-list' + queryParams)
   .subscribe((receptiondata) => {
     this.recption = receptiondata.reception;
     this.receptionUpdated.next({
@@ -44,17 +47,17 @@ getUpdatedReceptionListener(){
 
 // delete reception
 deleteReception(id: string){
-  return this.http.delete<{message: string}>('http://localhost:3000/reception/del-reception/'+ id )
+  return this.http.delete<{message: string}>(BACKEND_URL+'/reception/del-reception/'+ id )
 }
 
 // get by id
 getReceptionById(id: string){
-  return this.http.get<{reception: Reception}>('http://localhost:3000/reception/'+id)
+  return this.http.get<{reception: Reception}>(BACKEND_URL+'/reception/'+id)
 }
 
 // update
 updateReception(id: string, reception: Reception){
-  this.http.put('http://localhost:3000/reception/edit-reception/'+ id ,reception)
+  this.http.put(BACKEND_URL+'/reception/edit-reception/'+ id ,reception)
   .subscribe((response)=>{
       this.router.navigate(['/admin/reception-list']);
     });

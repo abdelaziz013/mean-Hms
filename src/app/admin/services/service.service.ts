@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Service } from './service.model';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 
 @Injectable({
@@ -19,7 +21,7 @@ export class ServiceService {
   // save service
   addService(service: Service){
     this.http
-          .post<{message: string}>('http://localhost:3000/service/add-service',service)
+          .post<{message: string}>(BACKEND_URL+'/service/add-service',service)
             .subscribe((response)=>{
               this.router.navigate(['/admin/service-list']);
             })
@@ -31,7 +33,7 @@ export class ServiceService {
 getServiceList(pageSize:number, currentPage: number){
   const queryParams = `?pagesize=${pageSize}&page=${currentPage}`;
   this.http
-      .get<{service: Service[],maxCount: number}>('http://localhost:3000/service/service-list'+queryParams)
+      .get<{service: Service[],maxCount: number}>(BACKEND_URL+'/service/service-list'+queryParams)
       .subscribe((response)=>{
         this.serviceList =response.service;
         this.serviceListUpdate.next({
@@ -47,17 +49,17 @@ getServiceUpdateListener(){
 
 // get service by id
 getserviceById(id:string){
-  return this.http.get<{service:Service}>('http://localhost:3000/service/service/'+id);
+  return this.http.get<{service:Service}>(BACKEND_URL+'/service/service/'+id);
 }
 
 // updateService
 updateService(id:string,service:Service){
-  return this.http.put('http://localhost:3000/service/edit-service/'+id,service)
+  return this.http.put(BACKEND_URL+'/service/edit-service/'+id,service)
 }
 
 // delete service
 deleteService(id:string){
-  return this.http.delete('http://localhost:3000/service/del-service/'+id)
+  return this.http.delete(BACKEND_URL+'/service/del-service/'+id)
 }
 
 }

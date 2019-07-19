@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Prescription } from './prescribtion.model';
 import { Subject } from 'rxjs';
 import { Patient } from 'src/app/reception/patient/patient.model';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class PrescriptionServiceService {
   // add presceiption
   addPresceibtion(id: string, prescription: Prescription) {
     this.http
-      .post<{ message: string, patient: Patient }>('http://localhost:3000/casemange/add-prescription/' + id, prescription)
+      .post<{ message: string, patient: Patient }>(BACKEND_URL+'/casemange/add-prescription/' + id, prescription)
       .subscribe((response) => {
         this.router.navigate(['/doctor/show-case', response.patient._id])
 
@@ -28,7 +30,7 @@ export class PrescriptionServiceService {
 
   // get prescribtion by patient id
   getPrescription(id: string) {
-    this.http.get<{ pres: Prescription[], message: string }>('http://localhost:3000/casemange/presciption/' + id)
+    this.http.get<{ pres: Prescription[], message: string }>(BACKEND_URL+'/casemange/presciption/' + id)
       .subscribe((responseData) => {
         this.presList = responseData.pres;
         this.presListupdate.next({
@@ -44,7 +46,7 @@ export class PrescriptionServiceService {
 
   // delete ores
   deletePres(id: string) {
-    return this.http.delete('http://localhost:3000/casemange/deletepres/' + id)
+    return this.http.delete(BACKEND_URL+'/casemange/deletepres/' + id)
   }
 
 

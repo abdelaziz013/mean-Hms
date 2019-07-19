@@ -4,6 +4,8 @@ import { User } from './users.model';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 
 
@@ -53,7 +55,7 @@ export class UsersService {
 
   // add user
   createUser(user: User) {
-    this.http.post('http://localhost:3000/users/add-users', user)
+    this.http.post(BACKEND_URL+'/users/add-users', user)
       .subscribe((response) => {
         this.router.navigate(['/admin/users-list'])
       })
@@ -70,7 +72,7 @@ export class UsersService {
         name: string,
         userRole: string,
         doctor: string
-      }>('http://localhost:3000/users/login', loginData)
+      }>(BACKEND_URL+'/users/login', loginData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;
@@ -167,7 +169,7 @@ export class UsersService {
   // userList
   getUserList(itemPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${itemPerPage}&page=${currentPage}`;
-    this.http.get<{ users: User[], maxCount: number }>('http://localhost:3000/users/user-list' + queryParams)
+    this.http.get<{ users: User[], maxCount: number }>(BACKEND_URL+'/users/user-list' + queryParams)
       .subscribe((respnseData) => {
         this.usersList = respnseData.users;
         this.usersListUpdated.next({
@@ -183,12 +185,12 @@ export class UsersService {
 
   // get user by Id
   getUserById(id: string) {
-    return this.http.get<{ user: User }>('http://localhost:3000/users/user/' + id)
+    return this.http.get<{ user: User }>(BACKEND_URL+'/users/user/' + id)
   }
 
   // update user
   updateUser(id: string, user: User) {
-    this.http.put('http://localhost:3000/users/edit-user/' + id, user)
+    this.http.put(BACKEND_URL+'/users/edit-user/' + id, user)
       .subscribe((response) => {
         this.router.navigate(['/admin/users-list'])
       })
@@ -196,7 +198,7 @@ export class UsersService {
   }
   // delete user
   deleteUser(id: string) {
-    return this.http.delete('http://localhost:3000/users/del-user/' + id)
+    return this.http.delete(BACKEND_URL+'/users/del-user/' + id)
   }
 
 }

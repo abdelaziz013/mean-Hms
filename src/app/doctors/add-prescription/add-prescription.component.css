@@ -47,11 +47,21 @@ i{
 
 }
 
-.mat-a{
-  background-color: #2cb94c;
+
+
+.more{
+  margin-top:-20px;
+
 }
 
-.mat-a:hover{
-  background-color: darkgreen;
+.fa-plus{
+  color:white;
 }
 
+.submit{
+  margin:10px;
+}
+
+.fa-trash-alt{
+  color:white;
+}

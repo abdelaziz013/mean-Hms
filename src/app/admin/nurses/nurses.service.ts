@@ -7,6 +7,9 @@ import { NurseShift } from './nurseShift.model';
 import { NurseRoster } from './roster.model';
 import * as moment from 'moment';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +31,7 @@ export class NursesService {
   // addnurse
   addNurse(nurse: Nurse) {
     this.http
-      .post<{ message: string, nurse: Nurse }>('http://localhost:3000/nurse/add-nurse', nurse)
+      .post<{ message: string, nurse: Nurse }>(BACKEND_URL+'/nurse/add-nurse', nurse)
       .subscribe((responseData) => {
         this.router.navigate(['/admin/nurses-list']);
       })
@@ -38,7 +41,7 @@ export class NursesService {
 
   getNurseList(itemPerPage: number, currentpage: number) {
     const queryParams = `?pagesize=${itemPerPage}&page=${currentpage}`;
-    this.http.get<{ nurses: Nurse[], maxCount: number }>('http://localhost:3000/nurse/nurse-list' + queryParams)
+    this.http.get<{ nurses: Nurse[], maxCount: number }>(BACKEND_URL+'/nurse/nurse-list' + queryParams)
       .subscribe((responseData) => {
         this.nurses = responseData.nurses;
         this.nursesUpdate.next({
@@ -55,23 +58,23 @@ export class NursesService {
 
   // get nurse by id
   getbyId(id: string) {
-    return this.http.get<{ nurse: Nurse }>('http://localhost:3000/nurse/' + id);
+    return this.http.get<{ nurse: Nurse }>(BACKEND_URL+'/nurse/' + id);
   }
 
   // update
   updateNurse(nurse: Nurse, id: string) {
-    return this.http.put('http://localhost:3000/nurse/edit/' + id, nurse)
+    return this.http.put(BACKEND_URL+'/nurse/edit/' + id, nurse)
   }
 
   // delete nurse
   deletNurse(id: string) {
-    return this.http.delete<{ message: string }>('http://localhost:3000/nurse/' + id)
+    return this.http.delete<{ message: string }>(BACKEND_URL+'/nurse/' + id)
   }
 
 
   // add nurseShifet
   addShift(shift: NurseShift) {
-    this.http.post<{ message: string, shift: NurseShift }>('http://localhost:3000/nurse/add-shift', shift)
+    this.http.post<{ message: string, shift: NurseShift }>('BACKEND_URL+/nurse/add-shift', shift)
       .subscribe((response) => {
         this.router.navigate(['/admin/nurseshift-list']);
       })
@@ -79,7 +82,7 @@ export class NursesService {
 
   // get shift list
   getShift(){
-    this.http.get<{nurseShift: NurseShift[]}>('http://localhost:3000/nurse/list/shift')
+    this.http.get<{nurseShift: NurseShift[]}>(BACKEND_URL+'/nurse/list/shift')
     .subscribe((data)=>{
       this.nurseShift = data.nurseShift;
       this.shiftUpdate.next({
@@ -98,13 +101,13 @@ export class NursesService {
 
   // deleteShift
   deleteShift(id:string){
-    return this.http.delete<{message: string}>('http://localhost:3000/nurse/deleteshift/' + id)
+    return this.http.delete<{message: string}>(BACKEND_URL+'/nurse/deleteshift/' + id)
   }
 
 
   // save roster
   addRoster(nurseRoster: NurseRoster){
-    this.http.post<{message: string}>('http://localhost:3000/nurse/add-roster',nurseRoster)
+    this.http.post<{message: string}>(BACKEND_URL+'/nurse/add-roster',nurseRoster)
     .subscribe((response)=>{
       this.router.navigate(['/admin/roster-list'])
 
@@ -113,7 +116,7 @@ export class NursesService {
 //  getroster
 getroster(itemPerPage: number,currentpage){
   const queryParams = `?pagesize=${itemPerPage}&page=${currentpage}`;
-  this.http.get<{roster: NurseRoster[],maxCount: number}>('http://localhost:3000/nurse/roster/list'+queryParams)
+  this.http.get<{roster: NurseRoster[],maxCount: number}>(BACKEND_URL+'/nurse/roster/list'+queryParams)
     .pipe(map(data=>{
         return {
           roster:data.roster.map(roster=>{
@@ -145,19 +148,18 @@ getrosterUpdateListener(){
 
 // get roster by id
 getRosterById(id:string){
-  return this.http.get<{roster: NurseRoster}>('http://localhost:3000/nurse/nurse-roster/' + id)
+  return this.http.get<{roster: NurseRoster}>(BACKEND_URL+'/nurse/nurse-roster/' + id)
 }
 
 //  update Roster
 updateRoster(roster: NurseRoster,id:string){
-  return this.http.put('http://localhost:3000/nurse/edit-roster/' + id,roster)
+  return this.http.put(BACKEND_URL+'/nurse/edit-roster/' + id,roster)
 
 }
 
 // delete roster
 deleteRoster(id: string){
-  return this.http.delete('http://localhost:3000/nurse/del-roster/' + id)
-
+  return this.http.delete(BACKEND_URL+'/nurse/del-roster/' + id)
 }
 
 

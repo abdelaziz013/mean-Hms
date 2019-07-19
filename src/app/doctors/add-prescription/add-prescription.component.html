@@ -1,5 +1,5 @@
 <nav mat-tab-nav-bar>
-  <a mat-stroked-button mat-tab-link routerLink="/reception/in-patient">
+  <a mat-stroked-button mat-tab-link routerLink="/patient">
     <i class="fas fa-procedures"></i>
     In-Patients List</a
   >
@@ -14,65 +14,66 @@
     <h1 fxLayout fxLayoutAlign="center center">Add Prescription</h1>
 
     <form [formGroup]="prscibtionForm" (ngSubmit)="onSubmit()">
-      <div formArrayName="prescribtion">
-        <div
-          fxLayout="row"
-          fxLayoutAlign="center center"
-          fxLayout.lt-md="column"
-          fxLayoutGap="20px"
-          *ngFor="
-            let item of prescription.controls;
-            let prescriptionIndex = index
-          "
-          [formGroupName]="prescriptionIndex"
-        >
+      <div formArrayName="prescribtion" *ngFor="
+            let item of prescription['controls'];
+            let i = index
+          ">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayout.lt-md="column" fxLayoutGap="20px"
+          [formGroupName]="i">
           <mat-form-field appearance="outline" fxFlex>
             <mat-label>Mebicine</mat-label>
             <!-- <input matInput required formControlName="medicine" /> -->
             <mat-select matInput required formControlName="medicine">
-              <mat-option
-                *ngFor="let medicine of medicineList"
-                [value]="medicine._id"
-              >
+              <mat-option *ngFor="let medicine of medicineList" [value]="medicine._id">
                 {{ medicine.name }}
               </mat-option>
             </mat-select>
+            <mat-error
+              *ngIf=" prscibtionForm.controls.prescribtion.controls[i].controls.medicine.touched&&prscibtionForm.controls.prescribtion.controls[i].controls.medicine.invalid">
+              please enter medicine
+            </mat-error>
+
 
           </mat-form-field>
 
           <mat-form-field appearance="outline" fxFlex>
             <mat-label>Dose</mat-label>
-            <input matInput required formControlName="dose" />
-            
-
+            <input matInput formControlName="dose"/>
+            <mat-error
+            *ngIf=" prscibtionForm.controls.prescribtion.controls[i].controls.dose.touched&&prscibtionForm.controls.prescribtion.controls[i].controls.dose.invalid">
+            please enter medicine dose
+          </mat-error>
           </mat-form-field>
+
+          <a *ngIf="i ===0"
+            mat-mini-fab
+            class="more"
+          color="primary"
+          matTooltip="Add More"
+
+            (click)="addPresceiption()">
+            <i class="fas fa-plus action-icon "></i>
+
+        </a>
+
+         <a *ngIf="i>=1"
+            matTooltip="Delete"
+            class="more"
+            mat-mini-fab
+            color="warn"
+            (click)="removePresceiption(i)">
+            <i class="far fa-trash-alt"></i>
+          </a> 
 
         </div>
 
         <div fxLayout fxLayoutAlign="center center">
-          <button
-            type="button"
-            class="mat mat-a"
-            mat-raised-button
-            color="primary"
-            (click)="addPresceiption()"
-          >
-            Add
-          </button>
-          <button
-            type="button"
-            class="mat"
-            mat-raised-button
-            color="accent"
-            (click)="removePresceiption(prescriptionIndex)"
-          >
-            Delete
-          </button>
+
         </div>
       </div>
 
       <div fxLayout fxLayoutAlign="center center">
-        <button type="submit" mat-raised-button color="primary">Save</button>
+        <button type="submit" mat-raised-button color="primary" class="submit">Save</button>
       </div>
     </form>
   </mat-card>

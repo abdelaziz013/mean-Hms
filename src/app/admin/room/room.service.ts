@@ -3,6 +3,8 @@ import { Room } from './room.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class RoomService {
 
   // add room
   addRoom(room: Room) {
-    this.http.post<{ room: Room }>('http://localhost:3000/room/add-room', room)
+    this.http.post<{ room: Room }>(BACKEND_URL+'/room/add-room', room)
       .subscribe((response) => {
         this.router.navigate(['/admin/room-list'])
       })
@@ -29,7 +31,7 @@ export class RoomService {
 
   getRoomList(pageSize: number, currentPage: number) {
     const queryParams = `?pagesize=${pageSize}&page=${currentPage}`;
-    this.http.get<{ room: Room[], maxCount: number }>('http://localhost:3000/room/room-list' + queryParams)
+    this.http.get<{ room: Room[], maxCount: number }>(BACKEND_URL+'/room/room-list' + queryParams)
       .subscribe((response) => {
         this.roomList = response.room;
         this.roomUpdate.next({
@@ -46,7 +48,7 @@ export class RoomService {
 
   // get empty room
   getEmptyRoomList() {
-    this.http.get<{ emptyRoom: Room[] }>('http://localhost:3000/room/emptyroom-list')
+    this.http.get<{ emptyRoom: Room[] }>(BACKEND_URL+'/room/emptyroom-list')
       .subscribe((response) => {
         this.emptyRoomlist= response.emptyRoom;
 
@@ -64,17 +66,17 @@ export class RoomService {
 
   // get room by iid
   getRoomById(id: string) {
-    return this.http.get<{ room: Room }>('http://localhost:3000/room/' + id)
+    return this.http.get<{ room: Room }>(BACKEND_URL+'/room/' + id)
   }
 
   // update room by id
   updateRoom(id: string, room: Room) {
-    return this.http.put('http://localhost:3000/room/edit-room/' + id, room);
+    return this.http.put(BACKEND_URL+'/room/edit-room/' + id, room);
   }
 
   //  delete room
   deleteRoom(id: string) {
-    return this.http.delete('http://localhost:3000/room/del-room/' + id)
+    return this.http.delete(BACKEND_URL+'/room/del-room/' + id)
   }
 
 

@@ -6,6 +6,8 @@ import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Bill } from '../bill/bill.model';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 
 @Injectable({
@@ -31,10 +33,10 @@ export class PatientService {
   // add patient
   addPatient(patient: Patient) {
     this.http
-      .post<{ savedpatient: Patient, message: string }>('http://localhost:3000/patient/add-patient', patient)
+      .post<{ savedpatient: Patient, message: string }>(BACKEND_URL+'/patient/add-patient', patient)
       .subscribe(responseData => {
         if (responseData.savedpatient.patientType === 'InPatient') {
-          this.router.navigate(['/reception/in-patient'])
+          this.router.navigate(['/patient'])
         } else {
           this.router.navigate(['/reception/out-patient'])
         }
@@ -46,7 +48,7 @@ export class PatientService {
   getInPatientList(itemPerPage: number, currentpage, id: string) {
     const queryParams = `?pagesize=${itemPerPage}&page=${currentpage}&id=${id}`;
     this.http
-      .get<{ patient: Patient[], maxCount: number }>('http://localhost:3000/patient/in-patient' + queryParams)
+      .get<{ patient: Patient[], maxCount: number }>(BACKEND_URL+'/patient/in-patient' + queryParams)
       .pipe(map(data => {
         return {
           patient: data.patient.map(patient => {
@@ -92,7 +94,7 @@ export class PatientService {
   getOutPatientList(itemPerPage: number, currentpage:number, id: string) {
     const queryParams = `?pagesize=${itemPerPage}&page=${currentpage}&id=${id}`;
     this.http
-      .get<{ patient: Patient[], maxCount: number }>('http://localhost:3000/patient/out-patient' + queryParams)
+      .get<{ patient: Patient[], maxCount: number }>(BACKEND_URL+'/patient/out-patient' + queryParams)
       .pipe(map(data => {
         return {
           patient: data.patient.map(patient => {
@@ -146,32 +148,32 @@ export class PatientService {
 
   // get patient by id
   getPatientById(id: string) {
-    return this.http.get<{ patient: Patient, message: string }>('http://localhost:3000/patient/patient/' + id)
+    return this.http.get<{ patient: Patient, message: string }>(BACKEND_URL+'/patient/patient/' + id)
   }
 
   // get bill by patient id
   getbillByPatientId(id: string) {
-    return this.http.get<{ bill: Bill }>('http://localhost:3000/patient/patient-bill/' + id)
+    return this.http.get<{ bill: Bill }>(BACKEND_URL+'/patient/patient-bill/' + id)
   }
  // get edit patient by id
  getEditPatientById(id: string) {
-  return this.http.get<{ patient: Patient, message: string }>('http://localhost:3000/patient/edit-patient/' + id)
+  return this.http.get<{ patient: Patient, message: string }>(BACKEND_URL+'/patient/edit-patient/' + id)
 }
 
 // update patient
 updatePatient(id: string,patient: Patient){
-  return this.http.put<{patient: Patient,message: string}>('http://localhost:3000/patient/edit/' + id,patient)
+  return this.http.put<{patient: Patient,message: string}>(BACKEND_URL+'/patient/edit/' + id,patient)
 }
 
 
  // delete patient
 deletePatient(id: string){
-  return this.http.delete<{message: string}>('http://localhost:3000/patient/delete-patient/'+ id )
+  return this.http.delete<{message: string}>(BACKEND_URL+'/patient/delete-patient/'+ id )
 }
 
   // add discharge date
   addDischargeDate(id: string, date: Date) {
-    this.http.put<{ messsage: string,id:string }>('http://localhost:3000/patient/discharge-inpatient/' + id, date)
+    this.http.put<{ messsage: string,id:string }>(BACKEND_URL+'/patient/discharge-inpatient/' + id, date)
       .subscribe((response) => {
         // console.log(response)
         // this.router.navigate(['/reception/add-bill',response.id])
@@ -180,7 +182,7 @@ deletePatient(id: string){
   }
   // add bill
   addBill(id: string, bill: Bill) {
-    this.http.post<{ messsage: string }>('http://localhost:3000/patient/add-bill/' + id, bill)
+    this.http.post<{ messsage: string }>(BACKEND_URL+'/patient/add-bill/' + id, bill)
       .subscribe((response) => {
         this.router.navigate(['/reception/bill-list'])
       })
@@ -189,7 +191,7 @@ deletePatient(id: string){
 
   // get bill list
   getbillList() {
-    this.http.get<{ billList: Bill[], message: string }>('http://localhost:3000/patient/bill-list')
+    this.http.get<{ billList: Bill[], message: string }>(BACKEND_URL+'/patient/bill-list')
       .subscribe((response) => {
         this.billList = response.billList;
         this.billListUpdate.next({
@@ -204,7 +206,7 @@ deletePatient(id: string){
 
   // get bill By id
   getBillById(id:string){
-   return this.http.get<{bill:Bill,patient:Patient}>('http://localhost:3000/patient/print-bill/'+id)
+   return this.http.get<{bill:Bill,patient:Patient}>(BACKEND_URL+'/patient/print-bill/'+id)
   }
 
 

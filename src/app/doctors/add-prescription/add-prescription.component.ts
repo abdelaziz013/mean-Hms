@@ -41,8 +41,8 @@ export class AddPrescriptionComponent implements OnInit,OnDestroy{
       prescribtion: this.fb.array([
         this.fb.group({
           _id: '',
-          medicine: '',
-          dose: ''
+          medicine:['',[Validators.required]],
+          dose: ['',[Validators.required]]
         })
       ])
     })
@@ -71,8 +71,8 @@ export class AddPrescriptionComponent implements OnInit,OnDestroy{
   addPresceiption() {
     this.prescription.push(this.fb.group({
       _id: '',
-      medicine: '',
-      dose: ''
+      medicine: ['',[Validators.required]],
+      dose: ['',[Validators.required]]
     }
     ));
   }
@@ -95,7 +95,7 @@ export class AddPrescriptionComponent implements OnInit,OnDestroy{
       this.presService.addPresceibtion(this.id,prescreption)
     });
 
-  
+
 
   }
 

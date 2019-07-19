@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Medicine } from './medicine.model';
 import { Subject } from 'rxjs';
-
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class MedicineService {
 
   // add medicine
   addMedicine(medicine:Medicine){
-    this.http.post<{message:string}>('http://localhost:3000/medicine/add-medicne',medicine)
+    this.http.post<{message:string}>(BACKEND_URL +'/medicine/add-medicne',medicine)
         .subscribe(()=>{
           this.router.navigate(['/admin/medicine-list'])
         })
@@ -24,7 +25,7 @@ export class MedicineService {
 
   getMedicineList(itemPerPage: number, currentpage: number){
       const queryParams = `?pagesize=${itemPerPage}&page=${currentpage}`;
-      this.http.get<{medicine:Medicine[],maxCount:number}>('http://localhost:3000/medicine/list'+ queryParams)
+      this.http.get<{medicine:Medicine[],maxCount:number}>(BACKEND_URL +'/medicine/list'+ queryParams)
           .subscribe((medData)=>{
             this.medList =medData.medicine
             this.medUpdate.next({
@@ -40,23 +41,23 @@ export class MedicineService {
 
   // delete
   deleteMedicine(id: string){
-    return this.http.delete('http://localhost:3000/medicine/'+ id);
+    return this.http.delete(BACKEND_URL +'/medicine/'+ id);
   }
 
 
   // get medicine by ID
   getMedicineById(id: string){
-    return this.http.get<{medicine: Medicine}>('http://localhost:3000/medicine/'+ id);
+    return this.http.get<{medicine: Medicine}>(BACKEND_URL +'/medicine/'+ id);
 
   }
 
 
-updateMedicine(id:string,medicine:Medicine){
-  this.http.put('http://localhost:3000/medicine/edit-medicine/'+id,medicine)
+updateMedicine(id:string,medicine: Medicine){
+  this.http.put(BACKEND_URL +'/medicine/edit-medicine/'+id,medicine)
   .subscribe((response=>{
     this.router.navigate(['/admin/medicine-list'])
   }))
 }
 
-  //last
+  
 }

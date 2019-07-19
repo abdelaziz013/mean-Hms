@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Pservice } from './pservice.model';
 import { Patient } from 'src/app/reception/patient/patient.model';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+const BACKEND_URL = environment.apiURL;
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +21,11 @@ export class PserviceService {
   // add pservice
   addPatientServices(id: string, pService: Pservice) {
     // this.http
-    //   .post<{ message: string,patient: Patient }>('http://localhost:3000/casemange/add-service/' + id, pService)
+    //   .post<{ message: string,patient: Patient }>(BACKEND_URL+'/casemange/add-service/' + id, pService)
     //   .subscribe((response) => {
     //     this.router.navigate(['/doctor/show-case', response.patient._id])
     //   })
-    return this.http.post<{ message: string, patient: Patient }>('http://localhost:3000/casemange/add-service/' + id, pService)
+    return this.http.post<{ message: string, patient: Patient }>(BACKEND_URL+'/casemange/add-service/' + id, pService)
 
   }
 
@@ -31,7 +33,7 @@ export class PserviceService {
   // get pservice
   getPtientService(id: string) {
     this.http
-      .get<{ pService: Pservice[], message: string }>('http://localhost:3000/casemange/service/' + id)
+      .get<{ pService: Pservice[], message: string }>(BACKEND_URL+'/casemange/service/' + id)
       .subscribe((responseData) => {
         this.pservice = responseData.pService;
         this.pserviceUpdate.next({
@@ -48,7 +50,7 @@ export class PserviceService {
 
   // delete service
   deletePatientService(id: string) {
-    return this.http.delete('http://localhost:3000/casemange/deleteservice/' + id)
+    return this.http.delete(BACKEND_URL+'/casemange/deleteservice/' + id)
   }
 }
 

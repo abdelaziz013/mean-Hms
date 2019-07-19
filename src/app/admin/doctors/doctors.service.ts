@@ -20,7 +20,7 @@ export class DoctorsService {
   // add doctor
   addDoctor(doctor: Doctor) {
     this.http
-      .post<{ message: string }>('http://localhost:3000/doctors/add-doctor', doctor)
+      .post<{ message: string }>(  BACKEND_URL +'/doctors/add-doctor', doctor)
       .subscribe((responseData) => {
         this.router.navigate(['/admin/doctorsList'])
       });
@@ -30,7 +30,7 @@ export class DoctorsService {
   getDoctors(doctorsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${doctorsPerPage}&page=${currentPage}`;
     this.http
-      // .get<{ doctors: any, maxCount: number }>('http://localhost:3000/doctors' + queryParams)
+
       .get<{ doctors: any, maxCount: number }>( BACKEND_URL + '/doctors' + queryParams)
       .pipe(
         map(doctorsData => {
@@ -64,7 +64,7 @@ export class DoctorsService {
   }
 
   deleteDoctor(doctorId: string) {
-    return this.http.delete('http://localhost:3000/doctors/' + doctorId)
+    return this.http.delete( BACKEND_URL +'/doctors/' + doctorId)
   }
 
   // get by id
@@ -79,12 +79,12 @@ export class DoctorsService {
         rank: string,
         creator: string
       }
-    }>('http://localhost:3000/doctors/' + id)
+    }>( BACKEND_URL +'/doctors/' + id)
   }
 
   // update
   updateDoctor(id: string, doctor: Doctor) {
-    this.http.put('http://localhost:3000/doctors/edit-doctor/' + id, doctor)
+    this.http.put( BACKEND_URL +'/doctors/edit-doctor/' + id, doctor)
       .subscribe((response) => {
         this.router.navigate(['/admin/doctorsList'])
       });
