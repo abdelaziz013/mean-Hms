@@ -46,7 +46,7 @@ export class PatientComponent implements OnInit, OnDestroy {
     private patientService: PatientService,
     private route: ActivatedRoute,
     private router: Router,
-   
+
   ) { }
 
   ngOnInit() {
@@ -115,7 +115,7 @@ export class PatientComponent implements OnInit, OnDestroy {
     if (this.mode === 'edit') {
       this.patientService.updatePatient(this.id, patient).subscribe((response) => {
         if (patient.patientType === 'InPatient') {
-          this.router.navigate(['/reception/in-patient'])
+          this.router.navigate(['/patient'])
         } else {
           this.router.navigate(['/reception/out-patient'])
         }

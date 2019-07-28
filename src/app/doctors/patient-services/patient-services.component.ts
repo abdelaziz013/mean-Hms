@@ -109,7 +109,7 @@ export class PatientServicesComponent implements OnInit, OnDestroy {
 
       if(this.userRole ==='Nurse'){
         this.patientService.addPatientServices(this.id, service).subscribe(response=>{
-          this.router.navigate(['/reception/in-patient'])
+          this.router.navigate(['/patient'])
         });
 
       }else{

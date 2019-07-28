@@ -30,6 +30,7 @@ exports.addUser =(req,res,next)=>{
 
 // login user
 exports.login =(req,res,next)=>{
+  console.log(req.body.username)
   let fetchedUser;
   User.findOne({ username: req.body.username })
     .then(user => {

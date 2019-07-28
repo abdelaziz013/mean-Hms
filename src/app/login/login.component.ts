@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
         if (loginForm.invalid) {
       return;
     }
+    console.log(loginForm.value.username)
         this.userService.login(loginForm.value.username, loginForm.value.password);
         loginForm.resetForm()
 
