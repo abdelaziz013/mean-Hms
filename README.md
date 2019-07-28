@@ -1,27 +1,50 @@
-# AHMS
+# description
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.4.
+-This project is for the automation of Hospital Management .
+-This system will make the work easy both for the hospital staff and the patients.
 
-## Development server
+-The system will be user friendly, easy to gather information in a very short time , reliable and comfortable.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Main facilities available in this project are:-
+•	Maintaining details of in/out patients.
+•	Maintaining patients diagnosis details, advised tests to be done
+•	Maintaining patient’s  diagnosis, prescription and medicine 
+•	Providing billing details for in/out patients.   .
+•	User or Administrator can search a patient’s record by his/her name or their ID.
+•	patient details report, prescription and billing reports can   be generated   as per user requirements
+•	Outpatients Clinics management
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+### Technolgies Used:-
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1-Node.js
+2-Express
+3-MongoDB (Inculding Mongoose)
+3-Angular 7
+4-Angular Material
+5-Angular flex
 
-## Running end-to-end tests
+#### Url:-
+http://mean-hms.s3-website.eu-central-1.amazonaws.com
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+#####login page admin:-
+username:admin passward:123
 
-## Further help
+######login page doctor:-
+username:ria passward:123
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#######login page reception:-
+username:rec passward:123
+
+######login page nurse:-
+username:nurse passward:123
+
+
+
+
+
+
+
