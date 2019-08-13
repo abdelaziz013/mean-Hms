@@ -7,11 +7,11 @@ import { PrintBillComponent } from './bill/print-bill/print-bill.component';
 import { BillListComponent } from './bill/bill-list/bill-list.component';
 
 const routes: Routes = [
-  {path: 'patient' , component:PatientComponent, canActivate:[AuthGuard],data: {title: 'Add Patient'}},
-    {path: 'add-bill/:id' , component: AddBillComponent, canActivate:[AuthGuard],data: {title: 'Add Bill'} },
-    {path: 'print-bill/:id' , component: PrintBillComponent, canActivate:[AuthGuard], data: {title: 'Print Bill'}},
-    {path: 'bill-list' , component: BillListComponent , canActivate:[AuthGuard], data: {title: 'Bill List'}},
-    {path: 'edit-patient/:id' , component:PatientComponent,  canActivate:[AuthGuard],data: {title: 'Edit Patient'}},
+  {path: 'patient' , component:PatientComponent,data: {title: 'Add Patient'}},
+    {path: 'add-bill/:id' , component: AddBillComponent,data: {title: 'Add Bill'} },
+    {path: 'print-bill/:id' , component: PrintBillComponent, data: {title: 'Print Bill'}},
+    {path: 'bill-list' , component: BillListComponent , data: {title: 'Bill List'}},
+    {path: 'edit-patient/:id' , component:PatientComponent,data: {title: 'Edit Patient'}},
 ];
 
 @NgModule({

@@ -25,6 +25,9 @@
 
 </nav>
 
+
+<div  *ngIf="userRole !== 'Admin'">
+
 <div fxLayout fxLayoutAlign="center">
   <h2 style = "color:red">Out-patient List</h2>
 </div>
@@ -190,4 +193,12 @@
     (page)="onChangPage($event)"
   >
   </mat-paginator>
+</div>
+</div>
+
+<div
+*ngIf="userRole === 'Admin'"
+style ="margin-top:160px;"
+fxLayout fxLayoutAlign="center">
+  <h2>You are not allowed to enter this page</h2>
 </div>

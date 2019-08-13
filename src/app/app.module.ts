@@ -19,6 +19,7 @@ import { ErrorComponent } from './error/error/error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ConfirmationDialogeComponent } from './confirmation-dialoge/confirmation-dialoge.component';
 import { SharedModule } from './shared/shared.module';
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 
 
 
@@ -34,7 +35,8 @@ import { SharedModule } from './shared/shared.module';
     NotFoundComponent,
     ConfirmationDialogeComponent,
     InpatientListComponent,
-    OutpatientListComponent
+    OutpatientListComponent,
+    NotAuthorizedComponent
   ],
   imports: [
     BrowserModule,
