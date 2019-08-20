@@ -23,9 +23,9 @@
 1-Node.js
 2-Express
 3-MongoDB (Inculding Mongoose)
-3-Angular 7
-4-Angular Material
-5-Angular flex
+4-Angular 7
+5-Angular Material
+6-Angular flex
 
 #### Url:-
 http://mean-hms.s3-website.eu-central-1.amazonaws.com
