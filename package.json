@@ -34,7 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "luxon": "^1.12.1",
     "moment": "^2.24.0",
-    "mongoose": "^5.4.22",
+    "mongoose": "^5.7.5",
     "mongoose-unique-validator": "^2.0.2",
     "ng2-charts": "^2.2.3",
     "ngx-material-timepicker": "^3.0.2",
