@@ -30,17 +30,7 @@
 #### Url:-
 http://mean-hms.s3-website.eu-central-1.amazonaws.com
 
-#####login page admin:-
-username:admin passward:123
 
-######login page doctor:-
-username:ria passward:123
-
-#######login page reception:-
-username:rec passward:123
-
-######login page nurse:-
-username:nurse passward:123
 
 
 
